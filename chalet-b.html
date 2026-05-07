@@ -12,9 +12,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://script.google.com" crossorigin>
-
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   </noscript>
@@ -1249,7 +1247,7 @@
           </div>
 
           <div class="fallback" id="calendarError">
-            تعذر تحميل بيانات التقويم. تأكد من رابط الخدمة وبيانات الجدول، ثم أعد تحديث الصفحة.
+            تعذر تحميل بيانات التقويم. تأكد من إعدادات Supabase والبيانات، ثم أعد تحديث الصفحة.
           </div>
         </div>
       </section>
@@ -1303,7 +1301,193 @@
   </main>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyamFBUqze5MVUYIVn813k8fEIAkI70JoTQNnomb9RSMp8MjT_zmMaGjOakA7cwdWgtFw/exec';
+
+    const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    const SUPABASE_BOOKINGS_TABLE = 'rafana_bookings';
+    const SUPABASE_RECEIPTS_BUCKET = 'payment-receipts';
+    const CALENDAR_AVAILABLE_DAYS = 730;
+    const RAVANA_RESORT_NAMES = ['شاليه رافانا A', 'شاليه رافانا B', 'شاليه رافانا C'];
+
+    function isSupabaseConfigured() {
+      return SUPABASE_URL &&
+        SUPABASE_ANON_KEY &&
+        !SUPABASE_URL.includes('YOUR-PROJECT') &&
+        SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY';
+    }
+
+    function ensureSupabaseConfigured() {
+      if (!isSupabaseConfigured()) {
+        throw new Error('يرجى ضبط SUPABASE_URL و SUPABASE_ANON_KEY داخل الملف.');
+      }
+    }
+
+    function supabaseRestBase() {
+      return SUPABASE_URL.replace(/\/$/, '') + '/rest/v1';
+    }
+
+    function supabaseStorageBase() {
+      return SUPABASE_URL.replace(/\/$/, '') + '/storage/v1';
+    }
+
+    function supabaseHeaders(extra) {
+      return Object.assign({
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+        Accept: 'application/json'
+      }, extra || {});
+    }
+
+    function supabaseIsoDate(value) {
+      if (!value) return '';
+      if (typeof value === 'string') return value.trim().slice(0, 10);
+      const d = new Date(value);
+      if (isNaN(d.getTime())) return '';
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + day;
+    }
+
+    function supabaseTodayIso() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + day;
+    }
+
+    function supabaseAddDays(dateStr, days) {
+      const d = new Date(dateStr + 'T00:00:00');
+      d.setDate(d.getDate() + days);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + day;
+    }
+
+    function getSupabaseResorts(resortFilter) {
+      const value = String(resortFilter || '').trim();
+      return value ? [value] : RAVANA_RESORT_NAMES.slice();
+    }
+
+    function mapSupabaseBookingRow(row) {
+      const date = supabaseIsoDate(row.booking_date || row.date || row['التاريخ']);
+      const resort = String(row.resort || row['الاستراحة'] || row['الشاليه'] || '').trim();
+      const status = String(row.status || row['الحالة'] || 'متاح').trim() || 'متاح';
+      const bookingType = String(row.booking_type || row.bookingType || row['نوع الحجز'] || '').trim();
+      const name = String(row.customer_name || row.name || row['الاسم'] || '').trim();
+      const phone = String(row.phone || row['الجوال'] || '').trim();
+      const notes = String(row.notes || row['ملاحظات'] || '').trim();
+      const bookingPrice = row.booking_price != null ? String(row.booking_price) : String(row.bookingPrice || row['سعر الحجز'] || '');
+      const refundableDeposit = row.refundable_deposit != null ? String(row.refundable_deposit) : String(row.refundableDeposit || row['التأمين المسترد'] || '');
+      const receiptUrl = String(row.receipt_url || row.payment_receipt_url || row['رابط الإيصال'] || '').trim();
+
+      return {
+        id: row.id || '',
+        date: date,
+        resort: resort,
+        status: status,
+        bookingType: bookingType,
+        name: name,
+        phone: phone,
+        notes: notes,
+        bookingPrice: bookingPrice,
+        refundableDeposit: refundableDeposit,
+        receiptUrl: receiptUrl,
+        'التاريخ': date,
+        'تاريخ الحجز': date,
+        'الاستراحة': resort,
+        'الشاليه': resort,
+        'اسم الشاليه': resort,
+        'الحالة': status,
+        'حالة الحجز': status,
+        'نوع الحجز': bookingType,
+        'الاسم': name,
+        'الجوال': phone,
+        'ملاحظات': notes,
+        'سعر الحجز': bookingPrice,
+        'التأمين المسترد': refundableDeposit,
+        'رابط الإيصال': receiptUrl
+      };
+    }
+
+    function buildSupabaseAvailabilityRows(resortFilter) {
+      const rows = [];
+      const start = supabaseTodayIso();
+      const resorts = getSupabaseResorts(resortFilter);
+
+      for (let i = 0; i < CALENDAR_AVAILABLE_DAYS; i++) {
+        const date = supabaseAddDays(start, i);
+
+        resorts.forEach(function(resort) {
+          rows.push(mapSupabaseBookingRow({
+            booking_date: date,
+            resort: resort,
+            status: 'متاح'
+          }));
+        });
+      }
+
+      return rows;
+    }
+
+    function mergeSupabaseBookingsWithAvailability(bookings, resortFilter) {
+      const map = new Map();
+
+      buildSupabaseAvailabilityRows(resortFilter).forEach(function(row) {
+        map.set(row['التاريخ'] + '|' + row['الاستراحة'], row);
+      });
+
+      bookings.map(mapSupabaseBookingRow).forEach(function(row) {
+        if (!row['التاريخ'] || !row['الاستراحة']) return;
+        map.set(row['التاريخ'] + '|' + row['الاستراحة'], row);
+      });
+
+      return Array.from(map.values());
+    }
+
+    async function fetchSupabaseStoredBookings(resortFilter) {
+      ensureSupabaseConfigured();
+
+      const params = new URLSearchParams();
+      params.set('select', '*');
+      params.set('order', 'booking_date.asc');
+
+      const resort = String(resortFilter || '').trim();
+      if (resort) {
+        params.set('resort', 'eq.' + resort);
+      }
+
+      const response = await fetch(supabaseRestBase() + '/' + SUPABASE_BOOKINGS_TABLE + '?' + params.toString(), {
+        method: 'GET',
+        cache: 'no-store',
+        headers: supabaseHeaders()
+      });
+
+      const text = await response.text();
+      let json = [];
+
+      try {
+        json = text ? JSON.parse(text) : [];
+      } catch (e) {
+        throw new Error('تعذر قراءة رد Supabase.');
+      }
+
+      if (!response.ok) {
+        throw new Error((json && json.message) || text || ('HTTP ' + response.status + ' failed'));
+      }
+
+      return Array.isArray(json) ? json : [];
+    }
+
+    async function fetchSupabaseCalendarJson(resortFilter) {
+      const rows = await fetchSupabaseStoredBookings(resortFilter);
+      return {
+        success: true,
+        data: mergeSupabaseBookingsWithAvailability(rows, resortFilter)
+      };
+    }
     const API_VERSION = '2026-05-02-chalet-local-fullcalendar-v1';
 
     const LANGUAGE_STORAGE_KEY = 'ravana_lang';
@@ -1422,7 +1606,7 @@
         loadingTitle: 'جاري تحميل التقويم',
         loadingSub: 'يرجى الانتظار قليلاً',
         calendarLibraryError: 'تعذر تحميل مكتبة التقويم. تأكد من رفع ملفات FullCalendar داخل مجلد libs/fullcalendar.',
-        calendarDataError: 'تعذر تحميل بيانات التقويم. تأكد من رابط الخدمة وبيانات الجدول، ثم أعد تحديث الصفحة.',
+        calendarDataError: 'تعذر تحميل بيانات التقويم. تأكد من إعدادات Supabase والبيانات، ثم أعد تحديث الصفحة.',
         locationTitle: 'موقعنا',
         locationPlace: 'نزوى، عمان',
         contactTitle: 'تواصل معنا',
@@ -1456,7 +1640,7 @@
         loadingTitle: 'Loading Calendar',
         loadingSub: 'Please wait a moment',
         calendarLibraryError: 'Unable to load the calendar library. Make sure FullCalendar files are uploaded inside libs/fullcalendar.',
-        calendarDataError: 'Unable to load calendar data. Please check the service URL and sheet data, then refresh.',
+        calendarDataError: 'Unable to load calendar data. Please check Supabase settings and data, then refresh.',
         locationTitle: 'Our Location',
         locationPlace: 'Nizwa, Oman',
         contactTitle: 'Contact Us',
@@ -1801,13 +1985,7 @@
     }
 
     function buildCalendarApiUrl() {
-      const query = new URLSearchParams();
-
-      query.set('fields', 'calendar');
-      query.set('resort', chalet().resortValue);
-      query.set('v', API_VERSION);
-
-      return API_URL + '?' + query.toString();
+      return '';
     }
 
     function delay(ms) {
@@ -1855,7 +2033,7 @@
         return calendarDataRequest;
       }
 
-      calendarDataRequest = fetchJsonWithRetry(buildCalendarApiUrl(), 3)
+      calendarDataRequest = fetchSupabaseCalendarJson(chalet().resortValue)
         .then(json => {
           bookingData = Array.isArray(json.data) ? json.data : [];
           calendarDataLoaded = true;
