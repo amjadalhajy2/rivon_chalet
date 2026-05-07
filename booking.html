@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/webp" href="logo.webp">
+  <link rel="shortcut icon" href="logo.webp">
+  <link rel="apple-touch-icon" href="logo.webp">
+
+  <title>حجز الإقامة - شاليهات رافانا</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  </noscript>
+
+  <style>
+    :root {
+      --surface: rgba(255,255,255,0.82);
+      --line: rgba(77, 58, 34, 0.10);
+      --text: #2c2218;
+      --muted: #76695a;
+      --brand: #8b6a48;
+      --brand-dark: #5f4630;
+      --success: #24a46d;
+      --danger: #d45454;
+      --shadow-xl: 0 24px 60px rgba(66, 43, 19, 0.10);
+      --shadow-md: 0 10px 22px rgba(66, 43, 19, 0.08);
+      --header-h: 78px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: var(--text);
+      background: #f7f3ed;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      padding-top: var(--header-h);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    html[lang="ar"] body,
+    html[lang="ar"] button,
+    html[lang="ar"] input,
+    html[lang="ar"] select,
+    html[lang="ar"] textarea {
+      font-family: "Tajawal", "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+
+    body::before {
+      display: none;
+    }
+
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .container {
+      width: min(1040px, calc(100% - 20px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      inset-inline: 0;
+      z-index: 2000;
+      width: 100%;
+    }
+
+    .topbar-inner {
+      width: 100%;
+      min-height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      background: rgba(255,255,255,0.84);
+      backdrop-filter: blur(8px) saturate(1.2);
+      -webkit-backdrop-filter: blur(8px) saturate(1.2);
+      border-bottom: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .logo-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #fff, #f2ebe3);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lang-btn,
+    .menu-btn {
+      min-height: 48px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 999px;
+      border: 0;
+      outline: none;
+    }
+
+    .lang-btn {
+      padding: 0 18px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(95, 70, 48, 0.18);
+    }
+
+    .menu-btn {
+      width: 48px;
+      min-width: 48px;
+      height: 48px;
+      padding: 0;
+      background: linear-gradient(180deg, #fff, #f6f0e8);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 14px 28px rgba(95, 70, 48, 0.10);
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text);
+    }
+
+    .side-menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2090;
+      background: rgba(32, 23, 16, 0.22);
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s ease;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      z-index: 2100;
+      width: min(84vw, 320px);
+      height: 100vh;
+      padding: 26px 20px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: .25s ease;
+      overflow-y: auto;
+    }
+
+    html[dir="rtl"] .side-menu {
+      left: 0;
+      right: auto;
+      box-shadow: 16px 0 40px rgba(66,43,19,0.12);
+      transform: translateX(-100%);
+    }
+
+    html[dir="ltr"] .side-menu {
+      right: 0;
+      left: auto;
+      box-shadow: -16px 0 40px rgba(66,43,19,0.12);
+      transform: translateX(100%);
+    }
+
+    body.menu-open .side-menu {
+      transform: translateX(0);
+    }
+
+    body.menu-open .side-menu-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(95,70,48,0.08);
+    }
+
+    .side-menu-head strong {
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .side-menu-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-link {
+      display: block;
+      padding: 10px 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      transition: .2s ease;
+      border-bottom: 1px solid rgba(95,70,48,0.06);
+      background: transparent;
+    }
+
+    .menu-link:hover,
+    .menu-sub-link:hover {
+      color: var(--brand-dark);
+      padding-inline-start: 6px;
+    }
+
+    .menu-group {
+      padding: 8px 0 4px;
+    }
+
+    .menu-group-title {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--muted);
+      margin-bottom: 6px;
+      padding: 6px 0;
+    }
+
+    .menu-sub-links {
+      display: grid;
+      gap: 4px;
+      padding-inline-start: 16px;
+    }
+
+    .menu-sub-link {
+      display: block;
+      padding: 9px 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      border-bottom: 1px solid rgba(95,70,48,0.05);
+      transition: .2s ease;
+    }
+
+    .page-wrap {
+      padding: 20px 0 34px;
+    }
+
+    .page-head {
+      padding: 10px 2px 14px;
+    }
+
+    .selected-resort-name {
+      margin: 0 0 10px;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--brand-dark);
+    }
+
+    .page-title {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 5vw, 48px);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .page-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.95;
+      max-width: 760px;
+    }
+
+    .calendar-card,
+    .booking-surface {
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(95,70,48,0.08);
+      border-radius: 32px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .calendar-card {
+      margin-top: 16px;
+    }
+
+    .calendar-wrapper {
+      position: relative;
+      min-height: 360px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.52), rgba(255,255,255,0.24));
+    }
+
+    #calendar {
+      position: relative;
+      z-index: 1;
+      min-height: 330px;
+      padding: 0;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,244,238,0.90));
+      transition: opacity .35s ease, visibility .35s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .loading-logo {
+      width: 82px;
+      height: 82px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(246,240,232,0.85));
+      border: 1px solid rgba(95,70,48,0.10);
+      box-shadow: var(--shadow-md);
+    }
+
+    .loading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid rgba(139,106,72,0.14);
+      border-top-color: var(--brand);
+      animation: spin .9s linear infinite;
+    }
+
+    .loading-text {
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .loading-subtext {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .fallback {
+      display: none;
+      margin: 12px 20px 20px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(212,84,84,0.10);
+      color: #992f2f;
+      border: 1px solid rgba(212,84,84,0.16);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .fc {
+      --fc-border-color: rgba(95,70,48,0.10);
+      --fc-page-bg-color: transparent;
+      --fc-neutral-bg-color: rgba(255,255,255,0.26);
+      --fc-list-event-hover-bg-color: rgba(139,106,72,0.08);
+      --fc-today-bg-color: rgba(236,228,216,0.74);
+      color: var(--text);
+    }
+
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+      border-color: rgba(95,70,48,0.08);
+    }
+
+    .fc .fc-toolbar {
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      padding: 12px 12px 0;
+    }
+
+    .fc .fc-toolbar-title {
+      font-size: clamp(1.05rem, 3vw, 1.4rem);
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .fc .fc-button {
+      min-height: 40px;
+      border-radius: 13px;
+      border: 1px solid rgba(95,70,48,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,240,232,0.88));
+      color: var(--text);
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(66,43,19,0.05);
+    }
+
+    .fc .fc-button-primary:not(:disabled).fc-button-active,
+    .fc .fc-button-primary:not(:disabled):active,
+    .fc .fc-button:hover {
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(236,228,216,0.92));
+      color: var(--text);
+      border-color: rgba(95,70,48,0.16);
+    }
+
+    .fc .fc-scrollgrid {
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+      border-radius: 0;
+    }
+
+    .fc .fc-daygrid-day-frame {
+      min-height: 92px;
+      padding: 2px;
+    }
+
+    .fc-daygrid-day-top {
+      padding: 2px 4px;
+    }
+
+    .fc-daygrid-event {
+      border: 0;
+      border-radius: 12px;
+      padding: 4px 6px;
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 10px 18px rgba(66,43,19,0.10);
+    }
+
+    .fc-daygrid-day-number,
+    .fc-col-header-cell-cushion {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .fc .fc-day-today {
+      background: rgba(236,228,216,0.74) !important;
+    }
+
+    .booking-shell {
+      width: 100%;
+      padding: 18px 0 0;
+    }
+
+    .booking-form {
+      padding: 0 20px 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 18px;
+    }
+
+    .field {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(95,70,48,0.08);
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--brand-dark);
+    }
+
+    .input,
+    .textarea {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: rgba(255,255,255,0.72);
+      border-radius: 18px;
+      min-height: 54px;
+      padding: 14px 16px;
+      font-size: 15px;
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px rgba(95,70,48,0.08);
+    }
+
+    .input[readonly] {
+      background: rgba(244,238,230,0.86);
+      cursor: default;
+    }
+
+    .textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+
+    .input:focus,
+    .textarea:focus {
+      box-shadow:
+        inset 0 0 0 1px rgba(139,106,72,0.24),
+        0 0 0 4px rgba(139,106,72,0.08);
+    }
+
+    .phone-wrap {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .price-summary-card,
+    .bank-transfer-box {
+      background: rgba(255,255,255,0.78);
+      border-radius: 20px;
+      padding: 10px 14px;
+      box-shadow: inset 0 0 0 1px rgba(95,70,48,0.08);
+    }
+
+    .bank-transfer-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+    }
+
+    .price-summary-row,
+    .bank-transfer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 46px;
+      border-bottom: 1px solid rgba(95,70,48,0.08);
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .price-summary-row:last-child,
+    .bank-transfer-row:last-child {
+      border-bottom: 0;
+    }
+
+    .price-summary-row.total {
+      font-weight: 800;
+      color: var(--brand-dark);
+    }
+
+    .bank-transfer-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--brand-dark);
+      line-height: 1.9;
+      margin-bottom: 10px;
+    }
+
+    .bank-transfer-label {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .bank-transfer-value {
+      color: var(--text);
+      font-weight: 800;
+      text-align: end;
+    }
+
+    .omr-inline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      margin-inline-start: 4px;
+    }
+
+    .omr-symbol-img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .omr-text-fallback {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--brand-dark);
+      line-height: 1;
+    }
+
+    .file-input {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .file-name {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .agreement-row {
+      padding-top: 18px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .agreement-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+      cursor: pointer;
+      flex-wrap: wrap;
+    }
+
+    .agreement-label input {
+      accent-color: var(--brand);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin: 0;
+    }
+
+    .agreement-link {
+      color: var(--brand-dark);
+      font-weight: 800;
+      text-decoration: underline;
+      display: inline;
+    }
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+    }
+
+    .submit-btn {
+      min-height: 54px;
+      padding: 0 24px;
+      border-radius: 999px;
+      border: 0;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 16px 28px rgba(95, 70, 48, 0.18);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+
+    .submit-progress-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(34, 26, 19, 0.34);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 20px;
+    }
+
+    .submit-progress-overlay.show {
+      display: flex;
+    }
+
+    .submit-progress-card {
+      width: min(360px, 100%);
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(95,70,48,0.10);
+      border-radius: 28px;
+      box-shadow: var(--shadow-xl);
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .submit-progress-ring {
+      --progress: 0;
+      width: 124px;
+      height: 124px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: conic-gradient(var(--brand) calc(var(--progress) * 1%), rgba(139,106,72,0.12) 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .submit-progress-ring-inner {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(95,70,48,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .submit-progress-percent {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--brand-dark);
+      line-height: 1;
+    }
+
+    .submit-progress-text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+      min-height: 28px;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      .topbar-inner,
+      .side-menu,
+      .calendar-card,
+      .booking-surface,
+      .submit-progress-overlay {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      :root { --header-h: 72px; }
+    }
+
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-form {
+        padding: 0 14px 18px;
+      }
+
+      .submit-row {
+        align-items: stretch;
+      }
+
+      .submit-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(100%, calc(100% - 12px)); }
+      .topbar-inner { padding: 10px 12px; }
+      .brand-title { font-size: 18px; }
+      .logo-box { width: 50px; height: 50px; border-radius: 16px; }
+      .topbar-actions { gap: 8px; }
+
+      .menu-btn {
+        width: 44px;
+        min-width: 44px;
+        height: 44px;
+        padding: 0;
+      }
+
+      .lang-btn {
+        min-height: 44px;
+        padding: 0 14px;
+      }
+
+      .page-title {
+        font-size: 32px;
+      }
+
+      .page-copy {
+        font-size: 14px;
+      }
+
+      .booking-surface,
+      .calendar-card {
+        border-radius: 26px;
+      }
+
+      .input,
+      .textarea {
+        min-height: 50px;
+        font-size: 14px;
+      }
+
+      .textarea {
+        min-height: 110px;
+      }
+
+      .phone-wrap {
+        grid-template-columns: 130px minmax(0, 1fr);
+        gap: 8px;
+      }
+
+      .fc .fc-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 8px 0;
+      }
+
+      .fc .fc-toolbar-chunk {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .fc .fc-daygrid-day-frame { min-height: 78px; }
+      .fc-daygrid-event { font-size: 10px; padding: 3px 5px; }
+
+      .side-menu {
+        width: min(90vw, 300px);
+      }
+
+      .menu-link,
+      .menu-sub-link {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-wrap">
+        <div class="logo-box">
+          <img src="logo.webp" alt="Ravana Chalets" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'">
+        </div>
+        <div class="brand-title" data-i18n="topbarBrand">شاليهات رافانا</div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="lang-btn" id="langToggle" type="button">EN</button>
+        <button class="menu-btn" id="menuToggle" type="button" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+
+  <aside class="side-menu" id="sideMenu">
+    <div class="side-menu-head">
+      <strong data-i18n="menuTitle">التنقل</strong>
+      <button class="close-btn" id="closeMenuBtn" type="button">×</button>
+    </div>
+
+    <nav class="side-menu-links">
+      <a href="index.html" class="menu-link nav-link" data-i18n="menuHome">الرئيسية</a>
+
+      <div class="menu-group">
+        <span class="menu-group-title" data-i18n="menuOurChalets">شاليهاتنا</span>
+        <div class="menu-sub-links">
+          <a href="chalet-a.html" class="menu-sub-link nav-link" data-i18n="menuChaletA">شاليه رافانا A</a>
+          <a href="chalet-b.html" class="menu-sub-link nav-link" data-i18n="menuChaletB">شاليه رافانا B</a>
+          <a href="chalet-c.html" class="menu-sub-link nav-link" data-i18n="menuChaletC">شاليه رافانا C</a>
+        </div>
+      </div>
+
+      <a href="rules.html" class="menu-link nav-link" data-i18n="menuRules">الشروط والضوابط</a>
+      <a href="index.html#contactSection" class="menu-link nav-link" data-i18n="menuContact">تواصل معنا</a>
+    </nav>
+  </aside>
+
+  <main class="page-wrap">
+    <div class="container">
+      <header class="page-head">
+        <div class="selected-resort-name" id="selectedResortHeading">شاليه رافانا A</div>
+        <h1 class="page-title" data-i18n="bookingTitle">احجز إقامتك</h1>
+        <p class="page-copy" data-i18n="bookingCopy">
+          اختر التاريخ المناسب من التقويم ادناه ثم اكمال البيانات لارسال طلب الحجز.
+        </p>
+      </header>
+
+      <section class="calendar-card">
+        <div class="calendar-wrapper">
+          <div class="loading-overlay" id="calendarLoading">
+            <div class="loading-box">
+              <div class="loading-logo">
+                <img src="logo.webp" alt="Ravana Chalets" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'">
+              </div>
+              <div class="loading-spinner"></div>
+              <div class="loading-text" data-i18n="loadingTitle">جاري تحميل التقويم</div>
+              <div class="loading-subtext" data-i18n="loadingSub">يرجى الانتظار قليلاً</div>
+            </div>
+          </div>
+
+          <div id="calendar"></div>
+        </div>
+
+        <div class="fallback" id="calendarError">
+          تعذر تحميل التقويم. تأكد من رابط الخدمة وبيانات الجدول، ثم أعد تحديث الصفحة.
+        </div>
+      </section>
+
+      <section class="booking-shell" id="bookingFormSection">
+        <div class="booking-surface">
+          <form id="bookingForm" class="booking-form" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label class="label" for="bookingDateDisplay" data-i18n="fieldDate">تاريخ الحجز</label>
+                <input class="input" id="bookingDateDisplay" type="text" readonly>
+                <input id="bookingDateValue" type="hidden" name="date">
+              </div>
+
+              <div class="field">
+                <label class="label" for="selectedResortInput" data-i18n="fieldResort">الشاليه</label>
+                <input class="input" id="selectedResortInput" type="text" readonly>
+              </div>
+
+              <div class="field">
+                <label class="label" for="bookingType" data-i18n="fieldBookingType">نوع الحجز</label>
+                <select class="input" id="bookingType" name="bookingType" required>
+                  <option value="بدون مبيت" selected data-i18n="bookingTypeDay">بدون مبيت</option>
+                  <option value="مع مبيت" data-i18n="bookingTypeNight">مع مبيت</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="label" for="nameInput" data-i18n="fieldName">الاسم</label>
+                <input class="input" id="nameInput" name="name" type="text" required>
+              </div>
+
+              <div class="field full">
+                <label class="label" for="phoneInput" data-i18n="fieldPhone">رقم الهاتف (واتساب)</label>
+                <div class="phone-wrap">
+                  <select class="input" id="countryCode" name="countryCode"></select>
+                  <input class="input" id="phoneInput" name="phone" type="tel" inputmode="numeric" autocomplete="tel" required>
+                </div>
+              </div>
+
+              <div class="field full">
+                <label class="label" for="notesInput" data-i18n="fieldNotes">ملاحظات</label>
+                <textarea class="textarea" id="notesInput" name="notes" data-i18n-placeholder="notesPlaceholder"></textarea>
+              </div>
+
+              <div class="field full">
+                <label class="label" data-i18n="priceSummaryTitle">تفاصيل السعر</label>
+
+                <div class="price-summary-card">
+                  <div class="price-summary-row">
+                    <span data-i18n="bookingPriceLabel">سعر الحجز</span>
+                    <strong id="bookingPriceValue">-</strong>
+                  </div>
+
+                  <div class="price-summary-row">
+                    <span data-i18n="depositLabel">الضمان المسترجع</span>
+                    <strong id="depositValue">-</strong>
+                  </div>
+
+                  <div class="price-summary-row total">
+                    <span data-i18n="totalLabel">إجمالي المبلغ</span>
+                    <strong id="totalValue">-</strong>
+                  </div>
+                </div>
+
+                <div class="bank-transfer-box">
+                  <div class="bank-transfer-title" data-i18n="bankTransferTitle">يرجى تحويل المبلغ وارفاق صورة ايصال التحويل</div>
+
+                  <div class="bank-transfer-row">
+                    <span class="bank-transfer-label" data-i18n="bankAccountNumberLabel">رقم الحساب:</span>
+                    <strong class="bank-transfer-value">0000000000000</strong>
+                  </div>
+
+                  <div class="bank-transfer-row">
+                    <span class="bank-transfer-label" data-i18n="bankMobileTransferLabel">للتحويل عبر الهاتف:</span>
+                    <strong class="bank-transfer-value">900000000</strong>
+                  </div>
+
+                  <div class="bank-transfer-row">
+                    <span class="bank-transfer-label" data-i18n="bankAccountNameLabel">اسم الحساب:</span>
+                    <strong class="bank-transfer-value" data-i18n="bankAccountNameValue">شاليه رافانا للضيافة</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field full">
+                <label class="label" for="paymentReceipt" data-i18n="fieldReceipt">صورة إيصال الدفع</label>
+                <input class="input file-input" id="paymentReceipt" type="file" accept="image/*" required>
+                <div class="file-name" id="paymentReceiptName" data-i18n="receiptPlaceholder">لم يتم اختيار ملف</div>
+              </div>
+            </div>
+
+            <div class="agreement-row">
+              <label class="agreement-label" for="termsAgree">
+                <input type="checkbox" id="termsAgree">
+                <span class="agreement-text">
+                  <span data-i18n="agreePrefix">عند الضغط على زر إرسال طلب الحجز فإنك توافق على </span>
+                  <a class="agreement-link" href="rules.html" target="_blank" rel="noopener noreferrer" data-i18n="rulesLink">الشروط والأحكام</a>
+                </span>
+              </label>
+            </div>
+
+            <div class="submit-row">
+              <button class="submit-btn" id="submitBtn" type="submit" data-i18n="submitBooking">إرسال طلب الحجز</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="submit-progress-overlay" id="submitProgressOverlay">
+    <div class="submit-progress-card">
+      <div class="submit-progress-ring" id="submitProgressRing">
+        <div class="submit-progress-ring-inner">
+          <div class="submit-progress-percent" id="submitProgressPercent">0%</div>
+        </div>
+      </div>
+      <div class="submit-progress-text" id="submitProgressText">جاري إرسال الطلب.</div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyamFBUqze5MVUYIVn813k8fEIAkI70JoTQNnomb9RSMp8MjT_zmMaGjOakA7cwdWgtFw/exec';
+    const API_VERSION = '2026-05-02-booking-local-fullcalendar-v1';
+    const LANGUAGE_STORAGE_KEY = 'ravana_lang';
+
+    const FULLCALENDAR_JS_URLS = [
+      './libs/fullcalendar/index.global.min.js'
+    ];
+
+    const FULLCALENDAR_LOCALE_URLS = [
+      './libs/fullcalendar/locales-all.global.min.js'
+    ];
+
+    const RESORTS = [
+      { key: 'A', ar: 'شاليه رافانا A', en: 'Ravana Chalet A' },
+      { key: 'B', ar: 'شاليه رافانا B', en: 'Ravana Chalet B' },
+      { key: 'C', ar: 'شاليه رافانا C', en: 'Ravana Chalet C' }
+    ];
+
+    const PRICE_TABLE = {
+      'شاليه رافانا A': { weekdayDay: 35, weekdayNight: 55, holidayDay: 45, holidayNight: 70, deposit: 20 },
+      'شاليه رافانا B': { weekdayDay: 38, weekdayNight: 58, holidayDay: 48, holidayNight: 74, deposit: 20 },
+      'شاليه رافانا C': { weekdayDay: 36, weekdayNight: 56, holidayDay: 46, holidayNight: 72, deposit: 20 }
+    };
+
+    const COUNTRY_CODES = [
+      ['+968', 'Oman'], ['+971', 'United Arab Emirates'], ['+966', 'Saudi Arabia'], ['+973', 'Bahrain'], ['+974', 'Qatar'], ['+965', 'Kuwait'], ['+967', 'Yemen'],
+      ['+20', 'Egypt'], ['+962', 'Jordan'], ['+961', 'Lebanon'], ['+963', 'Syria'], ['+964', 'Iraq'], ['+970', 'Palestine'], ['+90', 'Turkey'], ['+98', 'Iran'],
+      ['+212', 'Morocco'], ['+213', 'Algeria'], ['+216', 'Tunisia'], ['+218', 'Libya'], ['+249', 'Sudan'], ['+252', 'Somalia'], ['+253', 'Djibouti'], ['+222', 'Mauritania'],
+      ['+1', 'United States / Canada'], ['+44', 'United Kingdom'], ['+33', 'France'], ['+49', 'Germany'], ['+39', 'Italy'], ['+34', 'Spain'], ['+31', 'Netherlands'], ['+32', 'Belgium'],
+      ['+41', 'Switzerland'], ['+43', 'Austria'], ['+46', 'Sweden'], ['+47', 'Norway'], ['+45', 'Denmark'], ['+358', 'Finland'], ['+353', 'Ireland'], ['+351', 'Portugal'],
+      ['+30', 'Greece'], ['+48', 'Poland'], ['+40', 'Romania'], ['+359', 'Bulgaria'], ['+36', 'Hungary'], ['+420', 'Czech Republic'], ['+421', 'Slovakia'], ['+386', 'Slovenia'],
+      ['+385', 'Croatia'], ['+381', 'Serbia'], ['+387', 'Bosnia and Herzegovina'], ['+382', 'Montenegro'], ['+389', 'North Macedonia'], ['+355', 'Albania'], ['+383', 'Kosovo'],
+      ['+7', 'Russia / Kazakhstan'], ['+380', 'Ukraine'], ['+375', 'Belarus'], ['+373', 'Moldova'], ['+372', 'Estonia'], ['+371', 'Latvia'], ['+370', 'Lithuania'],
+      ['+91', 'India'], ['+92', 'Pakistan'], ['+880', 'Bangladesh'], ['+94', 'Sri Lanka'], ['+977', 'Nepal'], ['+960', 'Maldives'], ['+93', 'Afghanistan'],
+      ['+86', 'China'], ['+852', 'Hong Kong'], ['+853', 'Macau'], ['+886', 'Taiwan'], ['+81', 'Japan'], ['+82', 'South Korea'], ['+850', 'North Korea'],
+      ['+60', 'Malaysia'], ['+65', 'Singapore'], ['+62', 'Indonesia'], ['+63', 'Philippines'], ['+66', 'Thailand'], ['+84', 'Vietnam'], ['+855', 'Cambodia'], ['+856', 'Laos'], ['+95', 'Myanmar'], ['+673', 'Brunei'],
+      ['+61', 'Australia'], ['+64', 'New Zealand'], ['+675', 'Papua New Guinea'], ['+679', 'Fiji'], ['+685', 'Samoa'], ['+676', 'Tonga'],
+      ['+27', 'South Africa'], ['+234', 'Nigeria'], ['+254', 'Kenya'], ['+255', 'Tanzania'], ['+256', 'Uganda'], ['+251', 'Ethiopia'], ['+233', 'Ghana'], ['+237', 'Cameroon'],
+      ['+221', 'Senegal'], ['+225', 'Côte d’Ivoire'], ['+212', 'Western Sahara'], ['+220', 'Gambia'], ['+224', 'Guinea'], ['+245', 'Guinea-Bissau'], ['+232', 'Sierra Leone'], ['+231', 'Liberia'],
+      ['+228', 'Togo'], ['+229', 'Benin'], ['+226', 'Burkina Faso'], ['+223', 'Mali'], ['+227', 'Niger'], ['+235', 'Chad'], ['+236', 'Central African Republic'], ['+242', 'Republic of the Congo'],
+      ['+243', 'DR Congo'], ['+244', 'Angola'], ['+260', 'Zambia'], ['+263', 'Zimbabwe'], ['+258', 'Mozambique'], ['+264', 'Namibia'], ['+267', 'Botswana'], ['+266', 'Lesotho'], ['+268', 'Eswatini'],
+      ['+261', 'Madagascar'], ['+230', 'Mauritius'], ['+248', 'Seychelles'], ['+269', 'Comoros'], ['+250', 'Rwanda'], ['+257', 'Burundi'], ['+211', 'South Sudan'],
+      ['+52', 'Mexico'], ['+55', 'Brazil'], ['+54', 'Argentina'], ['+56', 'Chile'], ['+57', 'Colombia'], ['+51', 'Peru'], ['+58', 'Venezuela'], ['+593', 'Ecuador'],
+      ['+591', 'Bolivia'], ['+595', 'Paraguay'], ['+598', 'Uruguay'], ['+592', 'Guyana'], ['+597', 'Suriname'], ['+594', 'French Guiana'],
+      ['+502', 'Guatemala'], ['+503', 'El Salvador'], ['+504', 'Honduras'], ['+505', 'Nicaragua'], ['+506', 'Costa Rica'], ['+507', 'Panama'], ['+53', 'Cuba'],
+      ['+1', 'Dominican Republic'], ['+509', 'Haiti'], ['+1', 'Jamaica'], ['+1', 'Bahamas'], ['+1', 'Barbados'], ['+1', 'Trinidad and Tobago'], ['+1', 'Antigua and Barbuda'], ['+1', 'Saint Lucia']
+    ];
+
+    const I18N = {
+      ar: {
+        dir: 'rtl',
+        langButton: 'EN',
+        topbarBrand: 'شاليهات رافانا',
+        menuTitle: 'التنقل',
+        menuHome: 'الرئيسية',
+        menuOurChalets: 'شاليهاتنا',
+        menuChaletA: 'شاليه رافانا A',
+        menuChaletB: 'شاليه رافانا B',
+        menuChaletC: 'شاليه رافانا C',
+        menuRules: 'الشروط والضوابط',
+        menuContact: 'تواصل معنا',
+        bookingTitle: 'احجز إقامتك',
+        bookingCopy: 'اختر التاريخ المناسب من التقويم ادناه ثم اكمال البيانات لارسال طلب الحجز.',
+        loadingTitle: 'جاري تحميل التقويم',
+        loadingSub: 'يرجى الانتظار قليلاً',
+        calendarLibraryError: 'تعذر تحميل مكتبة التقويم. تأكد من رفع ملفات FullCalendar داخل مجلد libs/fullcalendar.',
+        calendarDataError: 'تعذر تحميل بيانات التقويم. تأكد من رابط الخدمة وبيانات الجدول، ثم أعد تحديث الصفحة.',
+        fieldDate: 'تاريخ الحجز',
+        fieldResort: 'الشاليه',
+        fieldBookingType: 'نوع الحجز',
+        bookingTypeDay: 'بدون مبيت',
+        bookingTypeNight: 'مع مبيت',
+        fieldName: 'الاسم',
+        fieldPhone: 'رقم الهاتف (واتساب)',
+        fieldNotes: 'ملاحظات',
+        notesPlaceholder: 'اكتب أي ملاحظات إضافية هنا',
+        priceSummaryTitle: 'تفاصيل السعر',
+        bookingPriceLabel: 'سعر الحجز',
+        depositLabel: 'الضمان المسترجع',
+        totalLabel: 'إجمالي المبلغ',
+        fieldReceipt: 'صورة إيصال الدفع',
+        receiptPlaceholder: 'لم يتم اختيار ملف',
+        submitBooking: 'إرسال طلب الحجز',
+        selectDateFirst: 'يرجى اختيار تاريخ الحجز أولًا.',
+        unavailableDate: 'التاريخ غير متاح.',
+        invalidPastDate: 'لا يمكن الحجز في تاريخ سابق.',
+        requiredFields: 'يرجى تعبئة جميع الحقول المطلوبة.',
+        submitError: 'تعذر إرسال الطلب حاليًا. يرجى المحاولة مرة أخرى.',
+        readingReceipt: 'جاري تجهيز إيصال الدفع...',
+        uploadingRequest: 'جاري رفع وإرسال الطلب...',
+        finishingRequest: 'جاري إنهاء العملية...',
+        receiptRequired: 'يرجى إرفاق صورة إيصال الدفع.',
+        fileTooLarge: 'حجم صورة الإيصال كبير جدًا. الحد الأقصى 5MB.',
+        invalidReceiptType: 'يرجى إرفاق صورة فقط.',
+        termsRequired: 'يجب الموافقة على الشروط والأحكام قبل إرسال الطلب.',
+        agreePrefix: 'عند الضغط على زر إرسال طلب الحجز فإنك توافق على ',
+        rulesLink: 'الشروط والأحكام',
+        availableEvent: 'متاح',
+        bookedEvent: 'غير متاح',
+        bankTransferTitle: 'يرجى تحويل المبلغ وارفاق صورة ايصال التحويل',
+        bankAccountNumberLabel: 'رقم الحساب:',
+        bankMobileTransferLabel: 'للتحويل عبر الهاتف:',
+        bankAccountNameLabel: 'اسم الحساب:',
+        bankAccountNameValue: 'شاليه رافانا للضيافة'
+      },
+      en: {
+        dir: 'ltr',
+        langButton: 'AR',
+        topbarBrand: 'Ravana Chalets',
+        menuTitle: 'Navigation',
+        menuHome: 'Home',
+        menuOurChalets: 'Our Chalets',
+        menuChaletA: 'Ravana Chalet A',
+        menuChaletB: 'Ravana Chalet B',
+        menuChaletC: 'Ravana Chalet C',
+        menuRules: 'Terms & Rules',
+        menuContact: 'Contact Us',
+        bookingTitle: 'Book Your Stay',
+        bookingCopy: 'Choose a suitable date from the calendar below, then complete the details to send the booking request.',
+        loadingTitle: 'Loading Calendar',
+        loadingSub: 'Please wait a moment',
+        calendarLibraryError: 'Unable to load the calendar library. Make sure FullCalendar files are uploaded inside libs/fullcalendar.',
+        calendarDataError: 'Unable to load calendar data. Please check the service URL and sheet data, then refresh.',
+        fieldDate: 'Booking Date',
+        fieldResort: 'Chalet',
+        fieldBookingType: 'Booking Type',
+        bookingTypeDay: 'Without Overnight',
+        bookingTypeNight: 'With Overnight',
+        fieldName: 'Name',
+        fieldPhone: 'Phone Number (WhatsApp)',
+        fieldNotes: 'Notes',
+        notesPlaceholder: 'Write any additional notes here',
+        priceSummaryTitle: 'Price Details',
+        bookingPriceLabel: 'Booking Price',
+        depositLabel: 'Refundable Deposit',
+        totalLabel: 'Total Amount',
+        fieldReceipt: 'Payment Receipt Image',
+        receiptPlaceholder: 'No file selected',
+        submitBooking: 'Send Booking Request',
+        selectDateFirst: 'Please select a booking date first.',
+        unavailableDate: 'This date is unavailable.',
+        invalidPastDate: 'You cannot book a past date.',
+        requiredFields: 'Please fill in all required fields.',
+        submitError: 'Unable to send the request now. Please try again.',
+        readingReceipt: 'Preparing payment receipt...',
+        uploadingRequest: 'Uploading and sending request...',
+        finishingRequest: 'Finishing process...',
+        receiptRequired: 'Please attach a payment receipt image.',
+        fileTooLarge: 'Receipt image is too large. Maximum size is 5MB.',
+        invalidReceiptType: 'Please attach an image file only.',
+        termsRequired: 'You must agree to the terms and rules before sending the request.',
+        agreePrefix: 'By sending the booking request, you agree to the ',
+        rulesLink: 'Terms & Rules',
+        availableEvent: 'Available',
+        bookedEvent: 'Unavailable',
+        bankTransferTitle: 'Please transfer the amount and attach the payment receipt',
+        bankAccountNumberLabel: 'Account Number:',
+        bankMobileTransferLabel: 'Mobile Transfer:',
+        bankAccountNameLabel: 'Account Name:',
+        bankAccountNameValue: 'Ravana Chalet Hospitality'
+      }
+    };
+
+    const langToggle = document.getElementById('langToggle');
+    const menuToggle = document.getElementById('menuToggle');
+    const sideMenuOverlay = document.getElementById('sideMenuOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    const selectedResortHeading = document.getElementById('selectedResortHeading');
+    const selectedResortInput = document.getElementById('selectedResortInput');
+
+    const bookingFormSection = document.getElementById('bookingFormSection');
+    const bookingForm = document.getElementById('bookingForm');
+    const bookingDateDisplay = document.getElementById('bookingDateDisplay');
+    const bookingDateValue = document.getElementById('bookingDateValue');
+
+    const bookingType = document.getElementById('bookingType');
+    const bookingPriceValue = document.getElementById('bookingPriceValue');
+    const depositValue = document.getElementById('depositValue');
+    const totalValue = document.getElementById('totalValue');
+
+    const paymentReceipt = document.getElementById('paymentReceipt');
+    const paymentReceiptName = document.getElementById('paymentReceiptName');
+
+    const termsAgree = document.getElementById('termsAgree');
+
+    const nameInput = document.getElementById('nameInput');
+    const countryCode = document.getElementById('countryCode');
+    const phoneInput = document.getElementById('phoneInput');
+    const notesInput = document.getElementById('notesInput');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const submitProgressOverlay = document.getElementById('submitProgressOverlay');
+    const submitProgressRing = document.getElementById('submitProgressRing');
+    const submitProgressPercent = document.getElementById('submitProgressPercent');
+    const submitProgressText = document.getElementById('submitProgressText');
+
+    const calendarLoading = document.getElementById('calendarLoading');
+    const calendarError = document.getElementById('calendarError');
+
+    let currentLang = 'ar';
+    let currentResort = RESORTS[0];
+    let bookingData = [];
+    let calendar = null;
+    let selectedDate = '';
+    let calendarDataLoaded = false;
+    let calendarDataRequest = null;
+    let fullCalendarAssetsLoaded = false;
+    let fullCalendarAssetsLoading = null;
+
+    function t(key) {
+      return I18N[currentLang][key] || key;
+    }
+
+    function getField(item, names) {
+      if (!item) return '';
+
+      for (let i = 0; i < names.length; i++) {
+        const name = names[i];
+
+        if (Object.prototype.hasOwnProperty.call(item, name)) {
+          return item[name];
+        }
+      }
+
+      return '';
+    }
+
+    function saveLanguagePreference() {
+      try {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLang);
+      } catch (e) {}
+    }
+
+    function loadLanguagePreference() {
+      try {
+        const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+        if (saved && I18N[saved]) currentLang = saved;
+      } catch (e) {}
+    }
+
+    function openMenu() {
+      document.body.classList.add('menu-open');
+    }
+
+    function closeMenu() {
+      document.body.classList.remove('menu-open');
+    }
+
+    function loadExternalScript(src) {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector('script[src="' + src + '"]')) {
+          resolve();
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = false;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
+    }
+
+    async function loadFirstWorkingScript(urls) {
+      let lastError = null;
+
+      for (const url of urls) {
+        try {
+          await loadExternalScript(url);
+          return url;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      throw lastError || new Error('FullCalendar JS failed');
+    }
+
+    async function loadFullCalendarAssets() {
+      if (fullCalendarAssetsLoaded) return;
+
+      if (fullCalendarAssetsLoading) {
+        return fullCalendarAssetsLoading;
+      }
+
+      fullCalendarAssetsLoading = loadFirstWorkingScript(FULLCALENDAR_JS_URLS)
+        .then(async () => {
+          try {
+            await loadFirstWorkingScript(FULLCALENDAR_LOCALE_URLS);
+          } catch (localeError) {
+            console.warn('FullCalendar locale file failed, calendar will continue.', localeError);
+          }
+
+          fullCalendarAssetsLoaded = true;
+        })
+        .catch(error => {
+          fullCalendarAssetsLoading = null;
+          throw error;
+        });
+
+      return fullCalendarAssetsLoading;
+    }
+
+    function populateCountryCodes() {
+      countryCode.innerHTML = COUNTRY_CODES.map(([code, country]) => {
+        const selected = code === '+968' && country === 'Oman' ? ' selected' : '';
+        return `<option value="${code}"${selected}>${code} ${country}</option>`;
+      }).join('');
+    }
+
+    function todayString() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return year + '-' + month + '-' + day;
+    }
+
+    function normalizeDate(value) {
+      if (!value) return '';
+      if (typeof value === 'string') return value.trim().slice(0, 10);
+
+      const date = new Date(value);
+      if (isNaN(date.getTime())) return '';
+
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+
+      return year + '-' + month + '-' + day;
+    }
+
+    function normalizeDigits(value) {
+      const arabicIndic = '٠١٢٣٤٥٦٧٨٩';
+      const easternArabicIndic = '۰۱۲۳۴۵۶۷۸۹';
+
+      return String(value || '')
+        .split('')
+        .map(ch => {
+          const idx1 = arabicIndic.indexOf(ch);
+          if (idx1 > -1) return String(idx1);
+
+          const idx2 = easternArabicIndic.indexOf(ch);
+          if (idx2 > -1) return String(idx2);
+
+          return ch;
+        })
+        .join('')
+        .replace(/\D/g, '');
+    }
+
+    function buildPhone() {
+      const code = String(countryCode.value || '').replace(/\D/g, '');
+      const number = normalizeDigits(phoneInput.value || '').replace(/^0+/, '');
+
+      if (!code || !number) return '';
+
+      return code + number;
+    }
+
+    function findResort(value) {
+      const clean = String(value || '').trim();
+
+      return RESORTS.find(item =>
+        item.ar === clean ||
+        item.en === clean ||
+        item.key === clean
+      );
+    }
+
+    function getResortDisplayName(resort) {
+      return currentLang === 'ar' ? resort.ar : resort.en;
+    }
+
+    function setCalendarError(message) {
+      calendarError.textContent = message || t('calendarDataError');
+      calendarError.style.display = 'block';
+    }
+
+    function clearCalendarError() {
+      calendarError.textContent = t('calendarDataError');
+      calendarError.style.display = 'none';
+    }
+
+    function formatMoney(value) {
+      const num = Number(value || 0);
+
+      return `
+        ${num}
+        <span class="omr-inline">
+          <img
+            class="omr-symbol-img"
+            src="images/omr-symbol.svg"
+            alt="OMR"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+          >
+          <span class="omr-text-fallback" style="display:none;">OMR</span>
+        </span>
+      `;
+    }
+
+    function getPricingBucketFromDate(dateStr) {
+      if (!dateStr) return 'weekday';
+
+      const date = new Date(dateStr + 'T12:00:00');
+      const day = date.getDay();
+
+      return (day === 5 || day === 6) ? 'holiday' : 'weekday';
+    }
+
+    function getCurrentPriceData() {
+      const resortPricing = PRICE_TABLE[currentResort.ar] || {
+        weekdayDay: 0,
+        weekdayNight: 0,
+        holidayDay: 0,
+        holidayNight: 0,
+        deposit: 20
+      };
+
+      const bucket = getPricingBucketFromDate(selectedDate || bookingDateValue.value);
+      const isOvernight = bookingType.value === 'مع مبيت';
+
+      const bookingPrice = bucket === 'holiday'
+        ? (isOvernight ? resortPricing.holidayNight : resortPricing.holidayDay)
+        : (isOvernight ? resortPricing.weekdayNight : resortPricing.weekdayDay);
+
+      const deposit = Number(resortPricing.deposit || 20);
+      const total = Number(bookingPrice) + deposit;
+
+      return {
+        bookingPrice: Number(bookingPrice),
+        deposit,
+        total
+      };
+    }
+
+    function updatePriceSummary() {
+      const priceData = getCurrentPriceData();
+
+      bookingPriceValue.innerHTML = formatMoney(priceData.bookingPrice);
+      depositValue.innerHTML = formatMoney(priceData.deposit);
+      totalValue.innerHTML = formatMoney(priceData.total);
+    }
+
+    function updateSelectedResortUI() {
+      const name = getResortDisplayName(currentResort);
+
+      selectedResortHeading.textContent = name;
+      selectedResortInput.value = name;
+
+      updatePriceSummary();
+    }
+
+    function updateSelectedDateUI() {
+      bookingDateDisplay.value = selectedDate || '';
+      bookingDateValue.value = selectedDate || '';
+      updatePriceSummary();
+    }
+
+    function showError(text) {
+      alert(text);
+    }
+
+    function clearMessage() {}
+
+    function getDateStatus(dateStr) {
+      const record = bookingData.find(item => {
+        const resort = String(getField(item, ['الاستراحة', 'الشاليه', 'اسم الشاليه']) || '').trim();
+        const date = normalizeDate(getField(item, ['التاريخ', 'تاريخ الحجز']));
+
+        return resort === currentResort.ar && date === dateStr;
+      });
+
+      if (!record) return 'متاح';
+
+      return String(getField(record, ['الحالة', 'حالة الحجز']) || '').trim() || 'متاح';
+    }
+
+    function isSelectableDate(dateStr) {
+      if (!dateStr || dateStr < todayString()) return false;
+      return getDateStatus(dateStr) === 'متاح';
+    }
+
+    function chooseDate(dateStr) {
+      if (!dateStr) return;
+
+      selectedDate = dateStr;
+      updateSelectedDateUI();
+      clearMessage();
+
+      bookingFormSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function buildCalendarApiUrl() {
+      const query = new URLSearchParams();
+
+      query.set('fields', 'calendar');
+      query.set('resort', currentResort.ar);
+      query.set('v', API_VERSION);
+
+      return API_URL + '?' + query.toString();
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function fetchJsonWithRetry(url, attempts = 3) {
+      let lastError = null;
+
+      for (let attempt = 1; attempt <= attempts; attempt++) {
+        try {
+          const res = await fetch(url, { method: 'GET' });
+          const rawText = await res.text();
+
+          let json;
+
+          try {
+            json = JSON.parse(rawText);
+          } catch (e) {
+            console.error('Raw API response was not JSON:', rawText);
+            throw new Error('تعذر قراءة رد الخدمة.');
+          }
+
+          if (!res.ok || !json.success) {
+            throw new Error((json && json.message) || ('HTTP ' + res.status + ' failed'));
+          }
+
+          return json;
+        } catch (error) {
+          lastError = error;
+
+          if (attempt < attempts) {
+            await delay(600 * attempt);
+          }
+        }
+      }
+
+      throw lastError || new Error('Load error');
+    }
+
+    async function loadAllBookings() {
+      if (calendarDataLoaded) return;
+
+      if (calendarDataRequest) {
+        return calendarDataRequest;
+      }
+
+      calendarDataRequest = fetchJsonWithRetry(buildCalendarApiUrl(), 3)
+        .then(json => {
+          bookingData = Array.isArray(json.data) ? json.data : [];
+          calendarDataLoaded = true;
+
+          if (selectedDate && !isSelectableDate(selectedDate)) {
+            selectedDate = '';
+            updateSelectedDateUI();
+          }
+        })
+        .finally(() => {
+          calendarDataRequest = null;
+        });
+
+      return calendarDataRequest;
+    }
+
+    function buildCalendarEvents() {
+      return bookingData
+        .map(item => {
+          const resort = String(getField(item, ['الاستراحة', 'الشاليه', 'اسم الشاليه']) || '').trim();
+          const date = normalizeDate(getField(item, ['التاريخ', 'تاريخ الحجز']));
+          const status = String(getField(item, ['الحالة', 'حالة الحجز']) || '').trim() || 'متاح';
+
+          if (!date || !resort) return null;
+          if (resort !== currentResort.ar) return null;
+          if (date < todayString()) return null;
+
+          const available = status === 'متاح';
+
+          return {
+            title: available ? t('availableEvent') : t('bookedEvent'),
+            start: date,
+            allDay: true,
+            backgroundColor: available ? '#24a46d' : '#d45454',
+            borderColor: available ? '#24a46d' : '#d45454',
+            textColor: '#ffffff',
+            extendedProps: {
+              date,
+              resort,
+              status,
+              available
+            }
+          };
+        })
+        .filter(Boolean);
+    }
+
+    async function renderCalendar() {
+      const calendarEl = document.getElementById('calendar');
+
+      try {
+        await loadFullCalendarAssets();
+      } catch (e) {
+        console.error('FullCalendar assets failed:', e);
+        setCalendarError(t('calendarLibraryError'));
+        calendarLoading.classList.add('hidden');
+        return;
+      }
+
+      if (!window.FullCalendar) {
+        setCalendarError(t('calendarLibraryError'));
+        calendarLoading.classList.add('hidden');
+        return;
+      }
+
+      if (calendar) {
+        calendar.destroy();
+      }
+
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: currentLang === 'ar' ? 'ar' : 'en',
+        direction: currentLang === 'ar' ? 'rtl' : 'ltr',
+        initialView: 'dayGridMonth',
+        initialDate: selectedDate || undefined,
+        height: 'auto',
+        headerToolbar: {
+          right: currentLang === 'ar' ? 'prev,next today' : 'today prev,next',
+          center: 'title',
+          left: ''
+        },
+        buttonText: currentLang === 'ar' ? { today: 'اليوم' } : { today: 'Today' },
+        editable: false,
+        selectable: false,
+
+        loading(isLoading) {
+          if (isLoading) {
+            clearCalendarError();
+            calendarLoading.classList.remove('hidden');
+          } else {
+            calendarLoading.classList.add('hidden');
+          }
+        },
+
+        events(fetchInfo, successCallback, failureCallback) {
+          loadAllBookings()
+            .then(() => {
+              clearCalendarError();
+              successCallback(buildCalendarEvents());
+            })
+            .catch(error => {
+              console.error('Calendar data failed:', error);
+
+              const details = error && error.message ? ' (' + error.message + ')' : '';
+
+              setCalendarError(t('calendarDataError') + details);
+              failureCallback(error);
+            });
+        },
+
+        dateClick(info) {
+          const clickedDate = normalizeDate(info.dateStr);
+
+          if (clickedDate < todayString()) return;
+
+          if (!isSelectableDate(clickedDate)) {
+            alert(t('unavailableDate'));
+            return;
+          }
+
+          chooseDate(clickedDate);
+        },
+
+        eventClick(info) {
+          info.jsEvent.preventDefault();
+
+          const props = info.event.extendedProps || {};
+          const date = normalizeDate(props.date);
+
+          if (!props.available) {
+            alert(t('unavailableDate'));
+            return;
+          }
+
+          chooseDate(date);
+        }
+      });
+
+      calendar.render();
+    }
+
+    function readFileAsDataUrlWithProgress(file, onProgress) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onprogress = (event) => {
+          if (event.lengthComputable && typeof onProgress === 'function') {
+            const ratio = event.loaded / event.total;
+            const percent = Math.min(22, Math.max(4, Math.round(4 + ratio * 18)));
+            onProgress(percent, t('readingReceipt'));
+          }
+        };
+
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error('Failed to read file'));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function sendBookingRequest(payload) {
+      return fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+      }).then(async (response) => {
+        const text = await response.text();
+        let json = null;
+
+        try {
+          json = JSON.parse(text);
+        } catch (e) {}
+
+        if (!response.ok || (json && json.success === false)) {
+          throw new Error(
+            (json && json.message) ||
+            text ||
+            ('HTTP ' + response.status + ' failed')
+          );
+        }
+
+        return { response, text, json };
+      });
+    }
+
+    function animateSubmitProgress(targetPercent, text, duration = 350) {
+      const current = Number(
+        String(submitProgressPercent.textContent || '0').replace('%', '')
+      ) || 0;
+
+      const start = current;
+      const end = targetPercent;
+      const startTime = performance.now();
+
+      submitProgressText.textContent = text;
+
+      function step(now) {
+        const progress = Math.min(1, (now - startTime) / duration);
+        const value = Math.round(start + (end - start) * progress);
+
+        submitProgressRing.style.setProperty('--progress', value);
+        submitProgressPercent.textContent = value + '%';
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    function showSubmitProgress(percent, text) {
+      submitProgressOverlay.classList.add('show');
+      animateSubmitProgress(percent, text, 260);
+    }
+
+    function hideSubmitProgress() {
+      submitProgressOverlay.classList.remove('show');
+      submitProgressRing.style.setProperty('--progress', 0);
+      submitProgressPercent.textContent = '0%';
+      submitProgressText.textContent = '';
+    }
+
+    async function submitBooking(e) {
+      e.preventDefault();
+      clearMessage();
+
+      const date = bookingDateValue.value;
+      const name = nameInput.value.trim();
+      const fullPhone = buildPhone();
+      const bookingTypeValue = bookingType.value;
+      const notes = notesInput.value.trim();
+
+      if (!date) {
+        showError(t('selectDateFirst'));
+        return;
+      }
+
+      if (date < todayString()) {
+        showError(t('invalidPastDate'));
+        return;
+      }
+
+      if (!isSelectableDate(date)) {
+        alert(t('unavailableDate'));
+        return;
+      }
+
+      if (!name || !fullPhone || !bookingTypeValue) {
+        showError(t('requiredFields'));
+        return;
+      }
+
+      if (!termsAgree.checked) {
+        showError(t('termsRequired'));
+        return;
+      }
+
+      const receiptFile = paymentReceipt.files && paymentReceipt.files[0];
+
+      if (!receiptFile) {
+        showError(t('receiptRequired'));
+        return;
+      }
+
+      if (!receiptFile.type || !receiptFile.type.startsWith('image/')) {
+        showError(t('invalidReceiptType'));
+        return;
+      }
+
+      if (receiptFile.size > 5 * 1024 * 1024) {
+        showError(t('fileTooLarge'));
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = t('readingReceipt');
+
+      try {
+        const priceData = getCurrentPriceData();
+
+        showSubmitProgress(8, t('readingReceipt'));
+
+        const receiptDataUrl = await readFileAsDataUrlWithProgress(receiptFile, (percent) => {
+          showSubmitProgress(percent, t('readingReceipt'));
+        });
+
+        showSubmitProgress(35, t('uploadingRequest'));
+        submitBtn.textContent = t('uploadingRequest');
+
+        const payload = {
+          date,
+          resort: currentResort.ar,
+          bookingType: bookingTypeValue,
+          bookingPrice: String(priceData.bookingPrice),
+          refundableDeposit: String(priceData.deposit),
+          name,
+          phone: fullPhone,
+          notes,
+          paymentReceiptFileName: receiptFile.name,
+          paymentReceiptDataUrl: receiptDataUrl,
+          status: 'بانتظار التأكيد'
+        };
+
+        showSubmitProgress(65, t('uploadingRequest'));
+
+        await sendBookingRequest(payload);
+
+        showSubmitProgress(92, t('finishingRequest'));
+        await new Promise(resolve => setTimeout(resolve, 250));
+
+        showSubmitProgress(100, t('finishingRequest'));
+        saveLanguagePreference();
+
+        const successParams = new URLSearchParams({
+          resort: currentResort.ar,
+          date
+        });
+
+        setTimeout(() => {
+          window.location.href = 'booking-success.html?' + successParams.toString();
+        }, 450);
+
+      } catch (error) {
+        console.error(error);
+        hideSubmitProgress();
+        submitBtn.disabled = false;
+        submitBtn.textContent = t('submitBooking');
+        showError(error.message || t('submitError'));
+      }
+    }
+
+    function presetFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const resortParam = params.get('resort');
+      const dateParam = params.get('date');
+
+      const foundResort = findResort(resortParam);
+
+      if (foundResort) {
+        currentResort = foundResort;
+      }
+
+      if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+        selectedDate = dateParam;
+      }
+
+      updateSelectedResortUI();
+      updateSelectedDateUI();
+    }
+
+    function applyLanguageWithoutCalendar() {
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = I18N[currentLang].dir;
+      document.body.dir = I18N[currentLang].dir;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.getAttribute('data-i18n'));
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+      });
+
+      langToggle.textContent = t('langButton');
+      menuToggle.setAttribute('aria-label', currentLang === 'ar' ? 'فتح القائمة' : 'Open menu');
+      notesInput.placeholder = t('notesPlaceholder');
+
+      paymentReceiptName.textContent = (paymentReceipt.files && paymentReceipt.files[0])
+        ? paymentReceipt.files[0].name
+        : t('receiptPlaceholder');
+
+      saveLanguagePreference();
+      updateSelectedResortUI();
+      updateSelectedDateUI();
+      updatePriceSummary();
+    }
+
+    function applyLanguage() {
+      applyLanguageWithoutCalendar();
+
+      if (calendar || fullCalendarAssetsLoaded) {
+        renderCalendar();
+      }
+    }
+
+    phoneInput.addEventListener('input', () => {
+      phoneInput.value = normalizeDigits(phoneInput.value);
+    });
+
+    bookingType.addEventListener('change', updatePriceSummary);
+
+    paymentReceipt.addEventListener('change', () => {
+      const file = paymentReceipt.files && paymentReceipt.files[0];
+      paymentReceiptName.textContent = file ? file.name : t('receiptPlaceholder');
+    });
+
+    langToggle.addEventListener('click', () => {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      saveLanguagePreference();
+      applyLanguage();
+    });
+
+    menuToggle.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    sideMenuOverlay.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        saveLanguagePreference();
+      });
+    });
+
+    bookingForm.addEventListener('submit', submitBooking);
+
+    populateCountryCodes();
+    loadLanguagePreference();
+    presetFromQuery();
+    applyLanguageWithoutCalendar();
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        renderCalendar();
+      }, 1200);
+    });
+  </script>
+</body>
+</html>

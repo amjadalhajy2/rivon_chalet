@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+  <title>تم استلام طلب الحجز - شاليهات رافانا</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --surface: rgba(255,255,255,0.82);
+      --line: rgba(77, 58, 34, 0.10);
+      --text: #2c2218;
+      --muted: #76695a;
+      --brand: #8b6a48;
+      --brand-dark: #5f4630;
+      --success: #24a46d;
+      --shadow-xl: 0 24px 60px rgba(66, 43, 19, 0.10);
+      --shadow-md: 0 10px 22px rgba(66, 43, 19, 0.08);
+      --header-h: 78px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(250,248,244,0.78), rgba(245,242,236,0.82)),
+        url('images/background-main.jpg') center center / cover no-repeat fixed;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      padding-top: var(--header-h);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    html[lang="ar"] body,
+    html[lang="ar"] button,
+    html[lang="ar"] input,
+    html[lang="ar"] select,
+    html[lang="ar"] textarea {
+      font-family: "Tajawal", "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.16;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(139,106,72,0.035) 0px,
+          rgba(139,106,72,0.035) 1px,
+          transparent 1px,
+          transparent 28px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(95,70,48,0.025) 0px,
+          rgba(95,70,48,0.025) 1px,
+          transparent 1px,
+          transparent 28px
+        );
+    }
+
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .container {
+      width: min(1040px, calc(100% - 20px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      inset-inline: 0;
+      z-index: 2000;
+      width: 100%;
+    }
+
+    .topbar-inner {
+      width: 100%;
+      min-height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      background: rgba(255,255,255,0.84);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      border-bottom: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .logo-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #fff, #f2ebe3);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lang-btn,
+    .menu-btn {
+      min-height: 48px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 999px;
+      border: 0;
+      outline: none;
+    }
+
+    .lang-btn {
+      padding: 0 18px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(95, 70, 48, 0.18);
+    }
+
+    .menu-btn {
+      width: 48px;
+      min-width: 48px;
+      height: 48px;
+      padding: 0;
+      background: linear-gradient(180deg, #fff, #f6f0e8);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text);
+    }
+
+    .side-menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2090;
+      background: rgba(32, 23, 16, 0.22);
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s ease;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      z-index: 2100;
+      width: min(84vw, 320px);
+      height: 100vh;
+      padding: 26px 20px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: .25s ease;
+      overflow-y: auto;
+    }
+
+    html[dir="rtl"] .side-menu {
+      left: 0;
+      right: auto;
+      box-shadow: 16px 0 40px rgba(66,43,19,0.12);
+      transform: translateX(-100%);
+    }
+
+    html[dir="ltr"] .side-menu {
+      right: 0;
+      left: auto;
+      box-shadow: -16px 0 40px rgba(66,43,19,0.12);
+      transform: translateX(100%);
+    }
+
+    body.menu-open .side-menu {
+      transform: translateX(0);
+    }
+
+    body.menu-open .side-menu-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(95,70,48,0.08);
+    }
+
+    .side-menu-head strong {
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .side-menu-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-link {
+      display: block;
+      padding: 10px 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      transition: .2s ease;
+      border-bottom: 1px solid rgba(95,70,48,0.06);
+      background: transparent;
+    }
+
+    .menu-link:hover,
+    .menu-sub-link:hover {
+      color: var(--brand-dark);
+      padding-inline-start: 6px;
+    }
+
+    .menu-group {
+      padding: 8px 0 4px;
+    }
+
+    .menu-group-title {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--muted);
+      margin-bottom: 6px;
+      padding: 6px 0;
+    }
+
+    .menu-sub-links {
+      display: grid;
+      gap: 4px;
+      padding-inline-start: 16px;
+    }
+
+    .menu-sub-link {
+      display: block;
+      padding: 9px 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      border-bottom: 1px solid rgba(95,70,48,0.05);
+      transition: .2s ease;
+    }
+
+    .page-wrap {
+      padding: 30px 0 40px;
+    }
+
+    .success-card {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(95,70,48,0.08);
+      border-radius: 34px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-xl);
+      padding: 34px 24px;
+      text-align: center;
+      max-width: 760px;
+      margin: 30px auto 0;
+    }
+
+    .success-icon {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(36,164,109,0.12);
+      color: var(--success);
+      font-size: 42px;
+      font-weight: 800;
+      box-shadow: inset 0 0 0 1px rgba(36,164,109,0.10);
+    }
+
+    .success-title {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .success-copy {
+      margin: 0 auto;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 2;
+    }
+
+    .success-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 22px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(95,70,48,0.08);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .meta-chip strong {
+      color: var(--brand-dark);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .whatsapp-btn,
+    .home-btn {
+      min-height: 54px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 0;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .whatsapp-btn {
+      background: linear-gradient(135deg, #2a9a65, #227b51);
+      color: #fff;
+      box-shadow: 0 16px 28px rgba(34,123,81,0.18);
+    }
+
+    .home-btn {
+      background: linear-gradient(180deg, #fff, #f6f0e8);
+      color: var(--text);
+      box-shadow: 0 10px 18px rgba(66,43,19,0.06);
+    }
+
+    @media (max-width: 720px) {
+      :root { --header-h: 72px; }
+
+      body {
+        background:
+          linear-gradient(rgba(250,248,244,0.78), rgba(245,242,236,0.82)),
+          url('images/background-main.jpg') center center / cover no-repeat;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(100%, calc(100% - 12px)); }
+      .topbar-inner { padding: 10px 12px; }
+      .brand-title { font-size: 18px; }
+      .logo-box { width: 50px; height: 50px; border-radius: 16px; }
+      .topbar-actions { gap: 8px; }
+
+      .menu-btn {
+        width: 44px;
+        min-width: 44px;
+        height: 44px;
+        padding: 0;
+      }
+
+      .lang-btn {
+        min-height: 44px;
+        padding: 0 14px;
+      }
+
+      .success-card {
+        border-radius: 26px;
+        padding: 28px 16px;
+      }
+
+      .success-title {
+        font-size: 30px;
+      }
+
+      .success-copy {
+        font-size: 14px;
+      }
+
+      .meta-chip {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .whatsapp-btn,
+      .home-btn {
+        width: 100%;
+      }
+
+      .side-menu {
+        width: min(90vw, 300px);
+      }
+
+      .menu-link,
+      .menu-sub-link {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-wrap">
+        <div class="logo-box">
+          <img src="logo.png" alt="Ravana Chalets" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'">
+        </div>
+        <div class="brand-title" data-i18n="topbarBrand">شاليهات رافانا</div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="lang-btn" id="langToggle" type="button">EN</button>
+        <button class="menu-btn" id="menuToggle" type="button" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+
+  <aside class="side-menu" id="sideMenu">
+    <div class="side-menu-head">
+      <strong data-i18n="menuTitle">التنقل</strong>
+      <button class="close-btn" id="closeMenuBtn" type="button">×</button>
+    </div>
+
+    <nav class="side-menu-links">
+      <a href="index.html" class="menu-link nav-link" data-i18n="menuHome">الرئيسية</a>
+
+      <div class="menu-group">
+        <span class="menu-group-title" data-i18n="menuOurChalets">شاليهاتنا</span>
+        <div class="menu-sub-links">
+          <a href="chalet-a.html" class="menu-sub-link nav-link" data-i18n="menuChaletA">شاليه رافانا A</a>
+          <a href="chalet-b.html" class="menu-sub-link nav-link" data-i18n="menuChaletB">شاليه رافانا B</a>
+          <a href="chalet-c.html" class="menu-sub-link nav-link" data-i18n="menuChaletC">شاليه رافانا C</a>
+        </div>
+      </div>
+
+      <a href="rules.html" class="menu-link nav-link" data-i18n="menuRules">الشروط والضوابط</a>
+      <a href="index.html#contactSection" class="menu-link nav-link" data-i18n="menuContact">تواصل معنا</a>
+    </nav>
+  </aside>
+
+  <main class="page-wrap">
+    <div class="container">
+      <section class="success-card">
+        <div class="success-icon">✓</div>
+        <h1 class="success-title" data-i18n="successTitle">تم استلام طلب الحجز</h1>
+        <p class="success-copy" data-i18n="successCopy">
+          تم استلام طلب الحجز بنجاح. للاستفسار عن حالة الطلب يمكنكم التواصل معنا عبر الواتساب من خلال الزر أدناه.
+        </p>
+
+        <div class="success-meta">
+          <div class="meta-chip">
+            <strong data-i18n="metaResort">الشاليه:</strong>
+            <span id="resortValue">-</span>
+          </div>
+          <div class="meta-chip">
+            <strong data-i18n="metaDate">التاريخ:</strong>
+            <span id="dateValue">-</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a id="whatsappBtn" class="whatsapp-btn" href="#" target="_blank" rel="noopener noreferrer">
+            <span>WhatsApp</span>
+          </a>
+          <a href="index.html" class="home-btn nav-link" data-i18n="backHome">العودة للرئيسية</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const LANGUAGE_STORAGE_KEY = 'ravana_lang';
+    const WHATSAPP_NUMBER = '96800000000';
+
+    const RESORTS = [
+      { key: 'A', ar: 'شاليه رافانا A', en: 'Ravana Chalet A' },
+      { key: 'B', ar: 'شاليه رافانا B', en: 'Ravana Chalet B' },
+      { key: 'C', ar: 'شاليه رافانا C', en: 'Ravana Chalet C' }
+    ];
+
+    const I18N = {
+      ar: {
+        dir: 'rtl',
+        langButton: 'EN',
+        topbarBrand: 'شاليهات رافانا',
+        menuTitle: 'التنقل',
+        menuHome: 'الرئيسية',
+        menuOurChalets: 'شاليهاتنا',
+        menuChaletA: 'شاليه رافانا A',
+        menuChaletB: 'شاليه رافانا B',
+        menuChaletC: 'شاليه رافانا C',
+        menuRules: 'الشروط والضوابط',
+        menuContact: 'تواصل معنا',
+        successTitle: 'تم استلام طلب الحجز',
+        successCopy: 'تم استلام طلب الحجز بنجاح. للاستفسار عن حالة الطلب يمكنكم التواصل معنا عبر الواتساب من خلال الزر أدناه.',
+        metaResort: 'الشاليه:',
+        metaDate: 'التاريخ:',
+        whatsappBtn: 'التواصل عبر واتساب',
+        backHome: 'العودة للرئيسية',
+        whatsappMessagePrefix: 'السلام عليكم، أود الاستفسار عن حالة طلب الحجز',
+      },
+      en: {
+        dir: 'ltr',
+        langButton: 'AR',
+        topbarBrand: 'Ravana Chalets',
+        menuTitle: 'Navigation',
+        menuHome: 'Home',
+        menuOurChalets: 'Our Chalets',
+        menuChaletA: 'Ravana Chalet A',
+        menuChaletB: 'Ravana Chalet B',
+        menuChaletC: 'Ravana Chalet C',
+        menuRules: 'Terms & Rules',
+        menuContact: 'Contact Us',
+        successTitle: 'Booking Request Received',
+        successCopy: 'Your booking request has been received successfully. To inquire about the request status, please contact us via WhatsApp using the button below.',
+        metaResort: 'Chalet:',
+        metaDate: 'Date:',
+        whatsappBtn: 'Contact via WhatsApp',
+        backHome: 'Back to Home',
+        whatsappMessagePrefix: 'Hello, I would like to ask about my booking request status',
+      }
+    };
+
+    const langToggle = document.getElementById('langToggle');
+    const menuToggle = document.getElementById('menuToggle');
+    const sideMenuOverlay = document.getElementById('sideMenuOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const resortValue = document.getElementById('resortValue');
+    const dateValue = document.getElementById('dateValue');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+
+    let currentLang = 'ar';
+    let selectedResort = '';
+    let selectedDate = '';
+
+    function t(key) {
+      return I18N[currentLang][key] || key;
+    }
+
+    function saveLanguagePreference() {
+      try {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLang);
+      } catch (e) {}
+    }
+
+    function loadLanguagePreference() {
+      try {
+        const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+        if (saved && I18N[saved]) currentLang = saved;
+      } catch (e) {}
+    }
+
+    function openMenu() {
+      document.body.classList.add('menu-open');
+    }
+
+    function closeMenu() {
+      document.body.classList.remove('menu-open');
+    }
+
+    function findResort(value) {
+      const clean = String(value || '').trim();
+      return RESORTS.find(item =>
+        item.ar === clean ||
+        item.en === clean ||
+        item.key === clean
+      );
+    }
+
+    function loadParams() {
+      const params = new URLSearchParams(window.location.search);
+      selectedResort = params.get('resort') || '';
+      selectedDate = params.get('date') || '';
+    }
+
+    function buildWhatsappLink() {
+      const resortText = selectedResort || '-';
+      const dateText = selectedDate || '-';
+      const message = `${t('whatsappMessagePrefix')}\n${t('metaResort')} ${resortText}\n${t('metaDate')} ${dateText}`;
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = I18N[currentLang].dir;
+      document.body.dir = I18N[currentLang].dir;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.getAttribute('data-i18n'));
+      });
+
+      langToggle.textContent = t('langButton');
+      menuToggle.setAttribute('aria-label', currentLang === 'ar' ? 'فتح القائمة' : 'Open menu');
+
+      const resortObj = findResort(selectedResort);
+      resortValue.textContent = resortObj ? (currentLang === 'ar' ? resortObj.ar : resortObj.en) : (selectedResort || '-');
+      dateValue.textContent = selectedDate || '-';
+      whatsappBtn.textContent = t('whatsappBtn');
+      whatsappBtn.href = buildWhatsappLink();
+
+      saveLanguagePreference();
+    }
+
+    langToggle.addEventListener('click', () => {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      saveLanguagePreference();
+      applyLanguage();
+    });
+
+    menuToggle.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    sideMenuOverlay.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        saveLanguagePreference();
+      });
+    });
+
+    loadLanguagePreference();
+    loadParams();
+    applyLanguage();
+  </script>
+</body>
+</html>
