@@ -1143,6 +1143,7 @@ const SUPABASE_URL = 'https://ywhumxkejpnzfkvvxxvd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
     const SUPABASE_BOOKINGS_TABLE = 'rafana_bookings';
     const SUPABASE_RECEIPTS_BUCKET = 'payment-receipts';
+    const SUPABASE_TELEGRAM_FUNCTION = 'telegram-booking-notify';
     const CALENDAR_AVAILABLE_DAYS = 730;
     const RAVANA_RESORT_NAMES = ['شاليه رافانا A', 'شاليه رافانا B', 'شاليه رافانا C'];
 
@@ -1165,6 +1166,10 @@ const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
 
     function supabaseStorageBase() {
       return SUPABASE_URL.replace(/\/$/, '') + '/storage/v1';
+    }
+
+    function supabaseFunctionsBase() {
+      return SUPABASE_URL.replace(/\/$/, '') + '/functions/v1';
     }
 
     function supabaseHeaders(extra) {
@@ -2172,11 +2177,56 @@ const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
       });
     }
 
+
+    function getFirstSupabaseBookingRow(result) {
+      if (Array.isArray(result) && result.length) return result[0];
+      if (result && Array.isArray(result.data) && result.data.length) return result.data[0];
+      if (result && typeof result === 'object') return result;
+      return null;
+    }
+
+    async function notifyTelegramNewBooking(payload, bookingResult, receiptInfo) {
+      const bookingRow = getFirstSupabaseBookingRow(bookingResult);
+
+      if (!bookingRow || !bookingRow.id) {
+        console.warn('Telegram notification skipped: missing booking id.');
+        return null;
+      }
+
+      const response = await fetch(supabaseFunctionsBase() + '/' + SUPABASE_TELEGRAM_FUNCTION, {
+        method: 'POST',
+        headers: supabaseHeaders({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({
+          type: 'new_booking',
+          booking_id: bookingRow.id,
+          receipt_url: receiptInfo && receiptInfo.url ? receiptInfo.url : null
+        })
+      });
+
+      const text = await response.text();
+      let json = null;
+      try { json = text ? JSON.parse(text) : null; } catch (e) {}
+
+      if (!response.ok) {
+        throw new Error((json && json.message) || text || ('HTTP ' + response.status + ' failed'));
+      }
+
+      return json;
+    }
     async function sendBookingRequest(payload) {
       ensureSupabaseConfigured();
       await assertSupabaseBookingDateAvailable(payload.date, payload.resort);
       const receiptInfo = await uploadReceiptToSupabase(payload);
       const json = await upsertSupabaseBooking(payload, receiptInfo);
+
+      try {
+        await notifyTelegramNewBooking(payload, json, receiptInfo);
+      } catch (notificationError) {
+        console.warn('Telegram notification failed:', notificationError);
+      }
+
       return { response: null, text: '', json: { success: true, data: json } };
     }
 
