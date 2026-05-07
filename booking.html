@@ -1139,8 +1139,8 @@
 
   <script>
 
-const SUPABASE_URL = 'https://ywhumxkejpnzfkvvxxvd.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
+    const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
     const SUPABASE_BOOKINGS_TABLE = 'rafana_bookings';
     const SUPABASE_RECEIPTS_BUCKET = 'payment-receipts';
     const CALENDAR_AVAILABLE_DAYS = 730;
@@ -1342,12 +1342,31 @@ const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
       return new Blob([bytes], { type: mime });
     }
 
-    function safeSupabaseFileName(name) {
-      const value = String(name || 'receipt').trim();
-      const dot = value.lastIndexOf('.');
-      const ext = dot > -1 ? value.slice(dot).toLowerCase().replace(/[^a-z0-9.]/g, '') : '.jpg';
-      const base = dot > -1 ? value.slice(0, dot) : value;
-      return base.replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') + ext;
+    function getSafeReceiptExtension(fileName, mimeType) {
+      const name = String(fileName || '').toLowerCase().trim();
+      const mime = String(mimeType || '').toLowerCase().trim();
+      const dot = name.lastIndexOf('.');
+      const ext = dot > -1 ? name.slice(dot + 1).replace(/[^a-z0-9]/g, '') : '';
+      const allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+      if (allowed.includes(ext)) {
+        return ext === 'jpeg' ? 'jpg' : ext;
+      }
+
+      if (mime.includes('png')) return 'png';
+      if (mime.includes('webp')) return 'webp';
+      if (mime.includes('gif')) return 'gif';
+      return 'jpg';
+    }
+
+    function createSupabaseReceiptKey(payload, blob) {
+      const datePart = supabaseIsoDate(payload.date) || supabaseTodayIso();
+      const ext = getSafeReceiptExtension(payload.paymentReceiptFileName, blob && blob.type);
+      const randomPart = window.crypto && crypto.randomUUID
+        ? crypto.randomUUID()
+        : String(Date.now()) + '-' + Math.random().toString(36).slice(2, 12);
+
+      return ['receipts', datePart, randomPart.replace(/[^a-zA-Z0-9-]/g, '' ) + '.' + ext].join('/');
     }
 
 
@@ -1384,9 +1403,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
 
     async function uploadReceiptToSupabase(payload) {
       const blob = dataUrlToBlob(payload.paymentReceiptDataUrl);
-      const fileName = safeSupabaseFileName(payload.paymentReceiptFileName);
-      const resortPart = String(payload.resort || 'resort').replace(/\s+/g, '-');
-      const filePath = [payload.date || supabaseTodayIso(), resortPart, Date.now() + '-' + fileName].join('/');
+      const filePath = createSupabaseReceiptKey(payload, blob);
       const uploadUrl = supabaseStorageBase() + '/object/' + encodeURIComponent(SUPABASE_RECEIPTS_BUCKET) + '/' + filePath.split('/').map(encodeURIComponent).join('/');
 
       const response = await fetch(uploadUrl, {
