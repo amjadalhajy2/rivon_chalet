@@ -134,6 +134,18 @@
     .booking-shell { width: 100%; padding: 18px 0 0; }
     .booking-form { padding: 0 20px 20px; }
     .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; }
+    
+    .dates-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      grid-column: 1 / -1;
+      border-bottom: 1px solid rgba(95,70,48,0.08);
+      padding-bottom: 16px;
+      margin-top: 16px;
+    }
+    .dates-row .field { border-bottom: none; padding: 0; }
+
     .field { padding: 16px 0; border-bottom: 1px solid rgba(95,70,48,0.08); min-width: 0; }
     .field.full { grid-column: 1 / -1; }
     .label { display: block; margin-bottom: 10px; font-size: 14px; font-weight: 800; color: var(--brand-dark); }
@@ -174,6 +186,7 @@
 
     @media (max-width: 640px) {
       .form-grid { grid-template-columns: 1fr; }
+      .dates-row { gap: 10px; }
       .submit-row { align-items: stretch; }
       .submit-btn { width: 100%; }
     }
@@ -237,7 +250,7 @@
         <div class="selected-resort-name" id="selectedResortHeading">شاليه رافانا A</div>
         <h1 class="page-title" data-i18n="bookingTitle">احجز إقامتك</h1>
         <p class="page-copy" data-i18n="bookingCopy">
-          الرجاء النقر على تاريخ الدخول (الساعة 2 ظهراً) ثم النقر على تاريخ الخروج (الساعة 12 ظهراً) من التقويم أدناه.
+          الرجاء اختيار تاريخ الدخول وتاريخ الخروج من التقويم أدناه.
         </p>
       </header>
 
@@ -261,16 +274,17 @@
           <form id="bookingForm" class="booking-form" novalidate>
             <div class="form-grid">
               
-              <div class="field">
-                <label class="label" for="checkInDisplay" data-i18n="fieldCheckIn">تاريخ الدخول</label>
-                <input class="input" id="checkInDisplay" type="text" readonly placeholder="اختر من التقويم">
-                <input id="checkInValue" type="hidden" name="checkIn">
-              </div>
-
-              <div class="field">
-                <label class="label" for="checkOutDisplay" data-i18n="fieldCheckOut">تاريخ الخروج</label>
-                <input class="input" id="checkOutDisplay" type="text" readonly placeholder="اختر من التقويم">
-                <input id="checkOutValue" type="hidden" name="checkOut">
+              <div class="dates-row">
+                <div class="field">
+                  <label class="label" for="checkInDisplay" data-i18n="fieldCheckIn">تاريخ الدخول</label>
+                  <input class="input" id="checkInDisplay" type="text" readonly placeholder="اختر من التقويم" data-i18n-placeholder="selectDate">
+                  <input id="checkInValue" type="hidden" name="checkIn">
+                </div>
+                <div class="field">
+                  <label class="label" for="checkOutDisplay" data-i18n="fieldCheckOut">تاريخ الخروج</label>
+                  <input class="input" id="checkOutDisplay" type="text" readonly placeholder="اختر من التقويم" data-i18n-placeholder="selectDate">
+                  <input id="checkOutValue" type="hidden" name="checkOut">
+                </div>
               </div>
 
               <div class="field full">
@@ -526,7 +540,6 @@
       { key: 'C', ar: 'شاليه رافانا C', en: 'Ravana Chalet C' }
     ];
 
-    // أسعار الليالي فقط، لأن المبيت أصبح إلزامي
     const PRICE_TABLE = {
       'شاليه رافانا A': { weekday: 55, holiday: 70, deposit: 20 },
       'شاليه رافانا B': { weekday: 58, holiday: 74, deposit: 20 },
@@ -541,10 +554,10 @@
       ar: {
         dir: 'rtl', langButton: 'EN', topbarBrand: 'شاليهات رافانا', menuTitle: 'التنقل', menuHome: 'الرئيسية', menuOurChalets: 'شاليهاتنا',
         menuChaletA: 'شاليه رافانا A', menuChaletB: 'شاليه رافانا B', menuChaletC: 'شاليه رافانا C', menuRules: 'الشروط والضوابط', menuContact: 'تواصل معنا',
-        bookingTitle: 'احجز إقامتك', bookingCopy: 'الرجاء النقر على تاريخ الدخول (الساعة 2 ظهراً) ثم النقر على تاريخ الخروج (الساعة 12 ظهراً) من التقويم أدناه.',
+        bookingTitle: 'احجز إقامتك', bookingCopy: 'الرجاء اختيار تاريخ الدخول وتاريخ الخروج من التقويم أدناه.',
         loadingTitle: 'جاري تحميل التقويم', loadingSub: 'يرجى الانتظار قليلاً',
         fieldCheckIn: 'تاريخ الدخول', fieldCheckOut: 'تاريخ الخروج', fieldResort: 'الشاليه', fieldName: 'الاسم',
-        fieldPhone: 'رقم الهاتف (واتساب)', fieldNotes: 'ملاحظات', notesPlaceholder: 'اكتب أي ملاحظات إضافية هنا',
+        fieldPhone: 'رقم الهاتف (واتساب)', fieldNotes: 'ملاحظات', notesPlaceholder: 'اكتب أي ملاحظات إضافية هنا', selectDate: 'اختر من التقويم',
         priceSummaryTitle: 'تفاصيل السعر', bookingPriceLabel: 'سعر الإقامة', depositLabel: 'الضمان المسترجع', totalLabel: 'إجمالي المبلغ',
         fieldReceipt: 'صورة إيصال الدفع', receiptPlaceholder: 'لم يتم اختيار ملف', submitBooking: 'إرسال طلب الحجز',
         selectDateFirst: 'يرجى اختيار تاريخ الدخول وتاريخ الخروج أولًا.', unavailableDate: 'الفترة المحددة تتعارض مع أيام محجوزة مسبقاً.',
@@ -559,10 +572,10 @@
       en: {
         dir: 'ltr', langButton: 'AR', topbarBrand: 'Ravana Chalets', menuTitle: 'Navigation', menuHome: 'Home', menuOurChalets: 'Our Chalets',
         menuChaletA: 'Ravana Chalet A', menuChaletB: 'Ravana Chalet B', menuChaletC: 'Ravana Chalet C', menuRules: 'Terms & Rules', menuContact: 'Contact Us',
-        bookingTitle: 'Book Your Stay', bookingCopy: 'Please click your check-in date (2 PM), then click your check-out date (12 PM) on the calendar below.',
+        bookingTitle: 'Book Your Stay', bookingCopy: 'Please select your check-in and check-out dates from the calendar below.',
         loadingTitle: 'Loading Calendar', loadingSub: 'Please wait a moment',
         fieldCheckIn: 'Check-in Date', fieldCheckOut: 'Check-out Date', fieldResort: 'Chalet', fieldName: 'Name',
-        fieldPhone: 'Phone Number (WhatsApp)', fieldNotes: 'Notes', notesPlaceholder: 'Write any additional notes here',
+        fieldPhone: 'Phone Number (WhatsApp)', fieldNotes: 'Notes', notesPlaceholder: 'Write any additional notes here', selectDate: 'Select from calendar',
         priceSummaryTitle: 'Price Details', bookingPriceLabel: 'Stay Price', depositLabel: 'Refundable Deposit', totalLabel: 'Total Amount',
         fieldReceipt: 'Payment Receipt Image', receiptPlaceholder: 'No file selected', submitBooking: 'Send Booking Request',
         selectDateFirst: 'Please select check-in and check-out dates first.', unavailableDate: 'Selected dates overlap with existing bookings.',
@@ -620,6 +633,17 @@
     function loadLanguagePreference() { try { const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY); if (saved && I18N[saved]) currentLang = saved; } catch (e) {} }
     function openMenu() { document.body.classList.add('menu-open'); }
     function closeMenu() { document.body.classList.remove('menu-open'); }
+
+    function formatNights(n) {
+      if (currentLang === 'ar') {
+        if (n === 1) return 'ليلة واحدة';
+        if (n === 2) return 'ليلتان';
+        if (n >= 3 && n <= 10) return n + ' ليالٍ';
+        return n + ' ليلة';
+      } else {
+        return n === 1 ? '1 night' : n + ' nights';
+      }
+    }
 
     function loadExternalScript(src) {
       return new Promise((resolve, reject) => {
@@ -690,7 +714,6 @@
     function isDateAvailable(dateStr) {
       return !bookingData.some(b => {
         if (b.resort !== currentResort.ar || b.status === 'متاح') return false;
-        // For hotel logic: Night is booked if date >= checkIn AND date < checkOut
         return dateStr >= b.checkIn && dateStr < b.checkOut;
       });
     }
@@ -728,7 +751,7 @@
 
     function updatePriceSummary() {
       const priceData = getCurrentPriceData();
-      const nightsText = priceData.nights > 0 ? ` <span style="font-size:13px;color:var(--muted); font-weight:normal;">(${priceData.nights} ليالي)</span>` : '';
+      const nightsText = priceData.nights > 0 ? ` <span style="font-size:13px;color:var(--muted); font-weight:normal;">(${formatNights(priceData.nights)})</span>` : '';
       bookingPriceValue.innerHTML = formatMoney(priceData.bookingPrice) + nightsText;
       depositValue.innerHTML = formatMoney(priceData.deposit);
       totalValue.innerHTML = formatMoney(priceData.total);
@@ -811,9 +834,10 @@
       }
 
       if (selectedCheckIn) {
+        const visualEnd = selectedCheckOut ? supabaseAddDays(selectedCheckOut, 1) : supabaseAddDays(selectedCheckIn, 1);
         events.push({
-          start: selectedCheckIn, end: selectedCheckOut ? selectedCheckOut : supabaseAddDays(selectedCheckIn, 1),
-          display: 'background', backgroundColor: 'rgba(139,106,72,0.4)'
+          start: selectedCheckIn, end: visualEnd,
+          display: 'background', backgroundColor: 'rgba(139, 106, 72, 0.25)' 
         });
       }
       return events;
@@ -845,7 +869,7 @@
         dateClick(info) { handleDateSelection(normalizeDate(info.dateStr)); },
         eventClick(info) {
           info.jsEvent.preventDefault();
-          if (!info.event.extendedProps.available) { alert(t('unavailableDate')); return; }
+          if (info.event.extendedProps && info.event.extendedProps.available === false) { alert(t('unavailableDate')); return; }
           handleDateSelection(normalizeDate(info.event.startStr));
         }
       });
