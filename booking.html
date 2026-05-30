@@ -784,7 +784,6 @@
       } else {
         if (isRangeAvailable(selectedCheckIn, dateStr)) {
           selectedCheckOut = dateStr;
-          bookingFormSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
           alert(t('unavailableDate'));
           selectedCheckIn = dateStr;
@@ -834,11 +833,32 @@
       }
 
       if (selectedCheckIn) {
-        const visualEnd = selectedCheckOut ? supabaseAddDays(selectedCheckOut, 1) : supabaseAddDays(selectedCheckIn, 1);
-        events.push({
-          start: selectedCheckIn, end: visualEnd,
-          display: 'background', backgroundColor: 'rgba(139, 106, 72, 0.25)' 
-        });
+        if (!selectedCheckOut) {
+          events.push({
+            start: selectedCheckIn, end: supabaseAddDays(selectedCheckIn, 1),
+            display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.70)' 
+          });
+        } else {
+          events.push({
+            start: selectedCheckIn, end: supabaseAddDays(selectedCheckIn, 1),
+            display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.70)' 
+          });
+          
+          if (selectedCheckOut !== selectedCheckIn) {
+            events.push({
+              start: selectedCheckOut, end: supabaseAddDays(selectedCheckOut, 1),
+              display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.70)' 
+            });
+          }
+          
+          const nextDay = supabaseAddDays(selectedCheckIn, 1);
+          if (nextDay < selectedCheckOut) {
+            events.push({
+              start: nextDay, end: selectedCheckOut,
+              display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.25)' 
+            });
+          }
+        }
       }
       return events;
     }
