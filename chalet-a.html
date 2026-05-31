@@ -12,7 +12,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   </noscript>
@@ -35,11 +35,7 @@
 
     * { box-sizing: border-box; }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
+    html, body { margin: 0; padding: 0; overflow-x: hidden; }
 
     body {
       font-family: "Segoe UI", Tahoma, Arial, sans-serif;
@@ -52,943 +48,156 @@
       min-height: 100vh;
     }
 
-    html[lang="ar"] body,
-    html[lang="ar"] button,
-    html[lang="ar"] input,
-    html[lang="ar"] select,
-    html[lang="ar"] textarea {
+    html[lang="ar"] body, html[lang="ar"] button, html[lang="ar"] input, html[lang="ar"] select, html[lang="ar"] textarea {
       font-family: "Tajawal", "Segoe UI", Tahoma, Arial, sans-serif;
     }
 
-    body > * {
-      position: relative;
-      z-index: 1;
-    }
-
+    body > * { position: relative; z-index: 1; }
     body.menu-open { overflow: hidden; }
-
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    .container { width: min(1180px, calc(100% - 20px)); margin: 0 auto; }
+    .glass-card { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-xl); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 
-    .container {
-      width: min(1180px, calc(100% - 20px));
-      margin: 0 auto;
-    }
+    .topbar { position: fixed; top: 0; inset-inline: 0; z-index: 2000; width: 100%; }
+    .topbar-inner { width: 100%; min-height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; background: rgba(255,255,255,0.84); backdrop-filter: blur(8px) saturate(1.2); border-bottom: 1px solid rgba(255,255,255,0.7); box-shadow: var(--shadow-md); }
+    .brand-wrap { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .logo-box { width: 56px; height: 56px; border-radius: 18px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #fff, #f2ebe3); box-shadow: inset 0 1px 0 rgba(255,255,255,0.75); }
+    .logo-box img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .brand-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .glass-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-xl);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .lang-btn, .menu-btn { min-height: 48px; font-weight: 800; cursor: pointer; font-size: 14px; border-radius: 999px; border: 0; outline: none; }
+    .lang-btn { padding: 0 18px; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); color: #fff; box-shadow: 0 14px 28px rgba(95, 70, 48, 0.18); }
+    .menu-btn { width: 48px; min-width: 48px; height: 48px; padding: 0; background: linear-gradient(180deg, #fff, #f6f0e8); color: var(--text); display: inline-flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; box-shadow: 0 14px 28px rgba(95, 70, 48, 0.10); }
+    .menu-btn span { display: block; width: 18px; height: 2px; border-radius: 999px; background: var(--text); }
 
-    .topbar {
-      position: fixed;
-      top: 0;
-      inset-inline: 0;
-      z-index: 2000;
-      width: 100%;
-    }
-
-    .topbar-inner {
-      width: 100%;
-      min-height: var(--header-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 18px;
-      background: rgba(255,255,255,0.84);
-      backdrop-filter: blur(8px) saturate(1.2);
-      -webkit-backdrop-filter: blur(8px) saturate(1.2);
-      border-bottom: 1px solid rgba(255,255,255,0.7);
-      box-shadow: var(--shadow-md);
-    }
-
-    .brand-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .logo-box {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      overflow: hidden;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(180deg, #fff, #f2ebe3);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
-    }
-
-    .logo-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    .brand-title {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .lang-btn,
-    .menu-btn {
-      min-height: 48px;
-      font-weight: 800;
-      cursor: pointer;
-      font-size: 14px;
-      border-radius: 999px;
-      border: 0;
-      outline: none;
-    }
-
-    .lang-btn {
-      padding: 0 18px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-      color: #fff;
-      box-shadow: 0 14px 28px rgba(95, 70, 48, 0.18);
-    }
-
-    .menu-btn {
-      width: 48px;
-      min-width: 48px;
-      height: 48px;
-      padding: 0;
-      background: linear-gradient(180deg, #fff, #f6f0e8);
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 4px;
-      box-shadow: 0 14px 28px rgba(95, 70, 48, 0.10);
-    }
-
-    .menu-btn span {
-      display: block;
-      width: 18px;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--text);
-    }
-
-    .side-menu-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 2090;
-      background: rgba(32, 23, 16, 0.22);
-      opacity: 0;
-      visibility: hidden;
-      transition: .25s ease;
-    }
-
-    .side-menu {
-      position: fixed;
-      top: 0;
-      z-index: 2100;
-      width: min(84vw, 320px);
-      height: 100vh;
-      padding: 26px 20px;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: .25s ease;
-      overflow-y: auto;
-    }
-
-    html[dir="rtl"] .side-menu {
-      left: 0;
-      right: auto;
-      box-shadow: 16px 0 40px rgba(66,43,19,0.12);
-      transform: translateX(-100%);
-    }
-
-    html[dir="ltr"] .side-menu {
-      right: 0;
-      left: auto;
-      box-shadow: -16px 0 40px rgba(66,43,19,0.12);
-      transform: translateX(100%);
-    }
-
+    .side-menu-overlay { position: fixed; inset: 0; z-index: 2090; background: rgba(32, 23, 16, 0.22); opacity: 0; visibility: hidden; transition: .25s ease; }
+    .side-menu { position: fixed; top: 0; z-index: 2100; width: min(84vw, 320px); height: 100vh; padding: 26px 20px; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); transition: .25s ease; overflow-y: auto; }
+    html[dir="rtl"] .side-menu { left: 0; right: auto; box-shadow: 16px 0 40px rgba(66,43,19,0.12); transform: translateX(-100%); }
+    html[dir="ltr"] .side-menu { right: 0; left: auto; box-shadow: -16px 0 40px rgba(66,43,19,0.12); transform: translateX(100%); }
     body.menu-open .side-menu { transform: translateX(0); }
-
-    body.menu-open .side-menu-overlay {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .side-menu-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 22px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(95,70,48,0.08);
-    }
-
-    .side-menu-head strong {
-      font-size: 22px;
-      letter-spacing: -0.02em;
-    }
-
-    .close-btn {
-      width: 40px;
-      height: 40px;
-      border: 0;
-      border-radius: 50%;
-      background: transparent;
-      color: var(--text);
-      font-size: 28px;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    .side-menu-links {
-      display: grid;
-      gap: 8px;
-    }
-
-    .menu-link {
-      display: block;
-      padding: 10px 0;
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text);
-      transition: .2s ease;
-      border-bottom: 1px solid rgba(95,70,48,0.06);
-      background: transparent;
-    }
-
-    .menu-link:hover {
-      color: var(--brand-dark);
-      padding-inline-start: 6px;
-    }
-
+    body.menu-open .side-menu-overlay { opacity: 1; visibility: visible; }
+    .side-menu-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 22px; padding-bottom: 12px; border-bottom: 1px solid rgba(95,70,48,0.08); }
+    .side-menu-head strong { font-size: 22px; letter-spacing: -0.02em; }
+    .close-btn { width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: var(--text); font-size: 28px; cursor: pointer; line-height: 1; }
+    .side-menu-links { display: grid; gap: 8px; }
+    .menu-link { display: block; padding: 10px 0; font-size: 17px; font-weight: 700; color: var(--text); transition: .2s ease; border-bottom: 1px solid rgba(95,70,48,0.06); background: transparent; }
+    .menu-link:hover { color: var(--brand-dark); padding-inline-start: 6px; }
     .menu-group { padding: 8px 0 4px; }
+    .menu-group-title { display: block; font-size: 15px; font-weight: 800; color: var(--muted); margin-bottom: 6px; padding: 6px 0; }
+    .menu-sub-links { display: grid; gap: 4px; padding-inline-start: 16px; }
+    .menu-sub-link { display: block; padding: 9px 0; font-size: 16px; font-weight: 700; color: var(--text); border-bottom: 1px solid rgba(95,70,48,0.05); transition: .2s ease; }
+    .menu-sub-link:hover { color: var(--brand-dark); padding-inline-start: 6px; }
 
-    .menu-group-title {
-      display: block;
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--muted);
-      margin-bottom: 6px;
-      padding: 6px 0;
-    }
+    .page-wrap { padding: 18px 0 34px; }
+    .title-block { padding: 10px 4px 8px; margin-bottom: 10px; }
+    .page-title { margin: 0; font-size: clamp(32px, 5vw, 46px); letter-spacing: -0.03em; line-height: 1.2; }
+    .section { padding: 0; margin-bottom: 16px; }
+    .section-card { border-radius: var(--radius-2xl); padding: 18px; margin-bottom: 16px; }
+    .section-title { margin: 0 0 14px; font-size: 28px; letter-spacing: -0.03em; }
 
-    .menu-sub-links {
-      display: grid;
-      gap: 4px;
-      padding-inline-start: 16px;
-    }
-
-    .menu-sub-link {
-      display: block;
-      padding: 9px 0;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      border-bottom: 1px solid rgba(95,70,48,0.05);
-      transition: .2s ease;
-    }
-
-    .menu-sub-link:hover {
-      color: var(--brand-dark);
-      padding-inline-start: 6px;
-    }
-
-    .page-wrap {
-      padding: 18px 0 34px;
-    }
-
-    .title-block {
-      padding: 10px 4px 8px;
-      margin-bottom: 10px;
-    }
-
-    .page-title {
-      margin: 0;
-      font-size: clamp(32px, 5vw, 46px);
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-    }
-
-    .section {
-      padding: 0;
-      margin-bottom: 16px;
-    }
-
-    .section-card {
-      border-radius: var(--radius-2xl);
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      margin: 0 0 14px;
-      font-size: 28px;
-      letter-spacing: -0.03em;
-    }
-
-    .gallery-card {
-      padding: 0 0 16px;
-      overflow: hidden;
-    }
-
-    .gallery-main {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 8.5;
-      overflow: hidden;
-      background: #ddd2c2;
-      margin-bottom: 12px;
-      touch-action: pan-y;
-    }
-
-    .gallery-main-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 1;
-      transform: scale(1);
-      transition: opacity .38s ease, transform .65s ease;
-    }
-
-    .gallery-main-image.changing {
-      opacity: .18;
-      transform: scale(1.03);
-    }
-
-    .gallery-main-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 3;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 0;
-      background: rgba(255,255,255,0.34);
-      color: #fff;
-      font-size: 18px;
-      font-weight: 800;
-      cursor: pointer;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-
-    .gallery-main-btn.prev {
-      left: 10px;
-      right: auto;
-    }
-
-    .gallery-main-btn.next {
-      right: 10px;
-      left: auto;
-    }
-
-    .thumbs-wrap {
-      position: relative;
-      padding: 0;
-      direction: ltr;
-    }
-
-    .thumbs-track {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 2px 54px 4px;
-      scrollbar-width: none;
-      direction: ltr;
-      justify-content: flex-start;
-      scroll-snap-type: x proximity;
-    }
-
+    .gallery-card { padding: 0 0 16px; overflow: hidden; }
+    .gallery-main { position: relative; width: 100%; aspect-ratio: 16 / 8.5; overflow: hidden; background: #ddd2c2; margin-bottom: 12px; touch-action: pan-y; }
+    .gallery-main-image { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 1; transform: scale(1); transition: opacity .38s ease, transform .65s ease; }
+    .gallery-main-image.changing { opacity: .18; transform: scale(1.03); }
+    .gallery-main-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.34); color: #fff; font-size: 18px; font-weight: 800; cursor: pointer; backdrop-filter: blur(4px); }
+    .gallery-main-btn.prev { left: 10px; right: auto; }
+    .gallery-main-btn.next { right: 10px; left: auto; }
+    .thumbs-wrap { position: relative; padding: 0; direction: ltr; }
+    .thumbs-track { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding: 2px 54px 4px; scrollbar-width: none; direction: ltr; justify-content: flex-start; scroll-snap-type: x proximity; }
     .thumbs-track::-webkit-scrollbar { display: none; }
+    .thumb-btn { flex: 0 0 102px; height: 74px; padding: 0; border: 2px solid transparent; border-radius: 16px; overflow: hidden; background: #ddd2c2; cursor: pointer; transition: .2s ease; direction: ltr; scroll-snap-align: center; }
+    .thumb-btn.active { border-color: var(--brand); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .thumb-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumbs-hint { position: absolute; top: 0; bottom: 0; width: 54px; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 2; }
+    .thumbs-hint span { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.26); color: rgba(255,255,255,0.90); font-size: 16px; font-weight: 800; backdrop-filter: blur(3px); }
+    .thumbs-hint-start { inset-inline-start: 0; background: linear-gradient(90deg, rgba(245,242,236,0.86) 0%, rgba(245,242,236,0) 100%); }
+    .thumbs-hint-end { inset-inline-end: 0; background: linear-gradient(270deg, rgba(245,242,236,0.86) 0%, rgba(245,242,236,0) 100%); }
 
-    .thumb-btn {
-      flex: 0 0 102px;
-      height: 74px;
-      padding: 0;
-      border: 2px solid transparent;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #ddd2c2;
-      cursor: pointer;
-      transition: .2s ease;
-      direction: ltr;
-      scroll-snap-align: center;
-    }
+    .details-band { width: 100vw; margin-inline: calc(50% - 50vw); margin-bottom: 16px; }
+    .details-full { border-radius: 0; padding: 28px 0; }
+    .detail-copy { margin: 0; color: var(--muted); line-height: 2; font-size: 15px; }
 
-    .thumb-btn.active {
-      border-color: var(--brand);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .thumb-btn img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .thumbs-hint {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .thumbs-hint span {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.26);
-      color: rgba(255,255,255,0.90);
-      font-size: 16px;
-      font-weight: 800;
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-    }
-
-    .thumbs-hint-start {
-      inset-inline-start: 0;
-      background: linear-gradient(90deg, rgba(245,242,236,0.86) 0%, rgba(245,242,236,0) 100%);
-    }
-
-    .thumbs-hint-end {
-      inset-inline-end: 0;
-      background: linear-gradient(270deg, rgba(245,242,236,0.86) 0%, rgba(245,242,236,0) 100%);
-    }
-
-    .details-band {
-      width: 100vw;
-      margin-inline: calc(50% - 50vw);
-      margin-bottom: 16px;
-    }
-
-    .details-full {
-      border-radius: 0;
-      padding: 28px 0;
-    }
-
-    .detail-copy {
-      margin: 0;
-      color: var(--muted);
-      line-height: 2;
-      font-size: 15px;
-    }
-
-    .amenities-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px 10px;
-      padding-top: 4px;
-    }
-
-    .amenity-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 10px;
-      min-height: 88px;
-    }
-
-    .amenity-icon {
-      font-size: 30px;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .icon-bedroom { color: #9b6a7f; }
-    .icon-bathroom { color: #5f8ba8; }
-    .icon-cinema { color: #a86f5f; }
-    .icon-kitchen { color: #7c8d57; }
-    .icon-pool { color: #4d9bb8; }
-    .icon-coffee { color: #9a7258; }
-    .icon-bbq { color: #b35f53; }
-    .icon-outdoor { color: #6b9a63; }
-    .icon-wifi { color: #6a78b8; }
-
-    .amenity-label {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1.6;
-    }
+    .amenities-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 10px; padding-top: 4px; }
+    .amenity-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; min-height: 88px; }
+    .amenity-icon { font-size: 30px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
+    .icon-bedroom { color: #9b6a7f; } .icon-bathroom { color: #5f8ba8; } .icon-cinema { color: #a86f5f; } .icon-kitchen { color: #7c8d57; } .icon-pool { color: #4d9bb8; } .icon-coffee { color: #9a7258; } .icon-bbq { color: #b35f53; } .icon-outdoor { color: #6b9a63; } .icon-wifi { color: #6a78b8; }
+    .amenity-label { font-size: 14px; font-weight: 800; color: var(--text); line-height: 1.6; }
 
     .price-box { padding-top: 4px; }
-
-    .prices-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
-      align-items: start;
-      gap: 18px;
-    }
-
+    .prices-layout { display: grid; grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr); align-items: start; gap: 18px; }
     .prices-column { min-width: 0; }
+    .prices-column.weekdays { order: 2; text-align: right; }
+    .prices-column.holidays { order: 1; text-align: left; }
+    html[dir="ltr"] .prices-column.weekdays { order: 1; text-align: left; }
+    html[dir="ltr"] .prices-column.holidays { order: 2; text-align: right; }
+    .prices-divider { width: 1px; align-self: stretch; background: rgba(95,70,48,0.12); }
+    .price-title { display: block; margin: 0 0 12px; color: var(--brand-dark); font-size: 16px; font-weight: 800; line-height: 1.6; }
+    .price-line { display: block; color: var(--muted); font-size: 15px; line-height: 2.15; }
 
-    .prices-column.weekdays {
-      order: 2;
-      text-align: right;
-    }
+    .omr-inline { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; margin-inline-start: 4px; }
+    .omr-symbol-img { width: 16px; height: 16px; object-fit: contain; display: block; }
+    .omr-text-fallback { font-size: 12px; font-weight: 800; color: var(--brand-dark); line-height: 1; }
 
-    .prices-column.holidays {
-      order: 1;
-      text-align: left;
-    }
-
-    html[dir="ltr"] .prices-column.weekdays {
-      order: 1;
-      text-align: left;
-    }
-
-    html[dir="ltr"] .prices-column.holidays {
-      order: 2;
-      text-align: right;
-    }
-
-    .prices-divider {
-      width: 1px;
-      align-self: stretch;
-      background: rgba(95,70,48,0.12);
-    }
-
-    .price-title {
-      display: block;
-      margin: 0 0 12px;
-      color: var(--brand-dark);
-      font-size: 16px;
-      font-weight: 800;
-      line-height: 1.6;
-    }
-
-    .price-line {
-      display: block;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 2.15;
-    }
-
-    .omr-inline {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      vertical-align: middle;
-      margin-inline-start: 4px;
-    }
-
-    .omr-symbol-img {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .omr-text-fallback {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--brand-dark);
-      line-height: 1;
-    }
-
-    .calendar-card {
-      padding: 0;
-      overflow: hidden;
-      border-radius: var(--radius-2xl);
-    }
-
-    .calendar-top {
-      padding: 22px 22px 14px;
-    }
-
-    .calendar-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .calendar-head span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 0;
-    }
-
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.72));
-      border: 1px solid rgba(95,70,48,0.10);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
+    .calendar-card { padding: 0; overflow: hidden; border-radius: var(--radius-2xl); }
+    .calendar-top { padding: 22px 22px 14px; }
+    .calendar-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+    .calendar-head span { color: var(--muted); font-size: 13px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0; }
+    .legend-item { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.72)); border: 1px solid rgba(95,70,48,0.10); color: var(--muted); font-size: 12px; font-weight: 700; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .legend-dot.success { background: var(--success); }
     .legend-dot.danger { background: var(--danger); }
 
-    .calendar-wrapper {
-      position: relative;
-      min-height: 360px;
-      overflow: hidden;
-      border-radius: 0;
-      margin: 0;
-      border-left: 0;
-      border-right: 0;
-      border-bottom: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.52), rgba(255,255,255,0.24));
-      border-top: 1px solid rgba(95,70,48,0.08);
-    }
+    .calendar-wrapper { position: relative; min-height: 360px; overflow: hidden; border-radius: 0; margin: 0; background: linear-gradient(180deg, rgba(255,255,255,0.52), rgba(255,255,255,0.24)); border-top: 1px solid rgba(95,70,48,0.08); }
+    #calendar { position: relative; z-index: 1; min-height: 330px; padding: 0; }
+    .loading-overlay { position: absolute; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,244,238,0.90)); transition: opacity .35s ease, visibility .35s ease; }
+    .loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loading-box { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding: 24px; }
+    .loading-logo { width: 82px; height: 82px; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(246,240,232,0.85)); border: 1px solid rgba(95,70,48,0.10); box-shadow: var(--shadow-md); }
+    .loading-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .loading-spinner { width: 40px; height: 40px; border-radius: 50%; border: 3px solid rgba(139,106,72,0.14); border-top-color: var(--brand); animation: spin .9s linear infinite; }
+    .loading-text { color: var(--text); font-size: 18px; font-weight: 800; }
+    .loading-subtext { color: var(--muted); font-size: 13px; }
+    .fallback { display: none; margin: 12px 22px 22px; padding: 12px; border-radius: 14px; background: rgba(212,84,84,0.10); color: #992f2f; border: 1px solid rgba(212,84,84,0.16); font-size: 14px; line-height: 1.8; }
 
-    #calendar {
-      position: relative;
-      z-index: 1;
-      min-height: 330px;
-      padding: 0;
-    }
-
-    .loading-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,244,238,0.90));
-      transition: opacity .35s ease, visibility .35s ease;
-    }
-
-    .loading-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .loading-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      text-align: center;
-      padding: 24px;
-    }
-
-    .loading-logo {
-      width: 82px;
-      height: 82px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(246,240,232,0.85));
-      border: 1px solid rgba(95,70,48,0.10);
-      box-shadow: var(--shadow-md);
-    }
-
-    .loading-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 3px solid rgba(139,106,72,0.14);
-      border-top-color: var(--brand);
-      animation: spin .9s linear infinite;
-    }
-
-    .loading-text {
-      color: var(--text);
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .loading-subtext {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .fallback {
-      display: none;
-      margin: 12px 22px 22px;
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(212,84,84,0.10);
-      color: #992f2f;
-      border: 1px solid rgba(212,84,84,0.16);
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .fc {
-      --fc-border-color: rgba(95,70,48,0.10);
-      --fc-page-bg-color: transparent;
-      --fc-neutral-bg-color: rgba(255,255,255,0.26);
-      --fc-list-event-hover-bg-color: rgba(139,106,72,0.08);
-      --fc-today-bg-color: rgba(236,228,216,0.74);
-      color: var(--text);
-    }
-
-    .fc-theme-standard td,
-    .fc-theme-standard th {
-      border-color: rgba(95,70,48,0.08);
-    }
-
-    .fc .fc-toolbar {
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-      padding: 12px 12px 0;
-    }
-
-    .fc .fc-toolbar-title {
-      font-size: clamp(1.05rem, 3vw, 1.4rem);
-      color: var(--text);
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
-
-    .fc .fc-button {
-      min-height: 40px;
-      border-radius: 13px;
-      border: 1px solid rgba(95,70,48,0.10);
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,240,232,0.88));
-      color: var(--text);
-      font-weight: 700;
-      box-shadow: 0 8px 18px rgba(66,43,19,0.05);
-    }
-
-    .fc .fc-button-primary:not(:disabled).fc-button-active,
-    .fc .fc-button-primary:not(:disabled):active,
-    .fc .fc-button:hover {
-      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(236,228,216,0.92));
-      color: var(--text);
-      border-color: rgba(95,70,48,0.16);
-    }
-
-    .fc .fc-scrollgrid {
-      border-left: 0;
-      border-right: 0;
-      border-bottom: 0;
-      border-radius: 0;
-    }
-
-    .fc .fc-daygrid-day-frame {
-      min-height: 92px;
-      padding: 2px;
-    }
-
+    .fc { --fc-border-color: rgba(95,70,48,0.10); --fc-page-bg-color: transparent; --fc-neutral-bg-color: rgba(255,255,255,0.26); --fc-list-event-hover-bg-color: rgba(139,106,72,0.08); --fc-today-bg-color: transparent; color: var(--text); }
+    .fc-theme-standard td, .fc-theme-standard th { border-color: rgba(95,70,48,0.08); }
+    .fc .fc-toolbar { gap: 8px; flex-wrap: wrap; margin-bottom: 10px; padding: 12px 12px 0; }
+    .fc .fc-toolbar-title { font-size: clamp(1.05rem, 3vw, 1.4rem); color: var(--text); font-weight: 800; letter-spacing: -0.01em; }
+    .fc .fc-button { min-height: 40px; border-radius: 13px; border: 1px solid rgba(95,70,48,0.10); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,240,232,0.88)); color: var(--text); font-weight: 700; box-shadow: 0 8px 18px rgba(66,43,19,0.05); }
+    .fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active, .fc .fc-button:hover { background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(236,228,216,0.92)); color: var(--text); border-color: rgba(95,70,48,0.16); }
+    .fc .fc-scrollgrid { border-left: 0; border-right: 0; border-bottom: 0; border-radius: 0; }
+    .fc .fc-daygrid-day-frame { min-height: 92px; padding: 2px; cursor: pointer; }
     .fc-daygrid-day-top { padding: 2px 4px; }
+    .fc-daygrid-event { border: 0; border-radius: 12px; padding: 4px 6px; margin-top: 4px; font-size: 11px; font-weight: 800; cursor: pointer; text-align: center; box-shadow: 0 10px 18px rgba(66,43,19,0.10); }
+    .fc-daygrid-day-number, .fc-col-header-cell-cushion { color: var(--text); text-decoration: none; font-weight: 800; font-size: 13px; }
+    .fc .fc-day-today { background: transparent !important; }
 
-    .fc-daygrid-event {
-      border: 0;
-      border-radius: 12px;
-      padding: 4px 6px;
-      margin-top: 4px;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
-      text-align: center;
-      box-shadow: 0 10px 18px rgba(66,43,19,0.10);
-    }
-
-    .fc-daygrid-day-number,
-    .fc-col-header-cell-cushion {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    .fc .fc-day-today {
-      background: rgba(236,228,216,0.74) !important;
-    }
-
-    .location-section,
-    .contact-section {
-      text-align: start;
-    }
-
-    .location-section {
-      padding: 8px 2px 8px;
-    }
-
-    .location-media {
-      display: flex;
-      justify-content: center;
-    }
-
-    .map-link {
-      display: block;
-      text-decoration: none;
-    }
-
-    .map-thumb {
-      width: 50%;
-      aspect-ratio: 16 / 7;
-      border-radius: 22px;
-      overflow: hidden;
-      background: #d7d1c8;
-      box-shadow: var(--shadow-xl);
-    }
-
-    .map-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .contact-section {
-      padding: 8px 2px 34px;
-    }
-
-    .contact-actions {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      gap: 34px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-
-    .contact-link {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: var(--text);
-      transition: transform .2s ease, opacity .2s ease;
-    }
-
-    .contact-link:hover {
-      transform: translateY(-2px);
-      opacity: 0.85;
-    }
-
-    .contact-icon {
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .contact-icon svg {
-      width: 32px;
-      height: 32px;
-      display: block;
-    }
-
-    .contact-label {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
+    .location-section, .contact-section { text-align: start; }
+    .location-section { padding: 8px 2px 8px; }
+    .location-media { display: flex; justify-content: center; }
+    .map-link { display: block; text-decoration: none; }
+    .map-thumb { width: 50%; aspect-ratio: 16 / 7; border-radius: 22px; overflow: hidden; background: #d7d1c8; box-shadow: var(--shadow-xl); }
+    .map-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .contact-section { padding: 8px 2px 34px; }
+    .contact-actions { display: flex; justify-content: flex-start; align-items: flex-start; gap: 34px; margin-top: 12px; flex-wrap: wrap; }
+    .contact-link { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text); transition: transform .2s ease, opacity .2s ease; }
+    .contact-link:hover { transform: translateY(-2px); opacity: 0.85; }
+    .contact-icon { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; }
+    .contact-icon svg { width: 32px; height: 32px; display: block; }
+    .contact-label { font-size: 14px; font-weight: 700; color: var(--muted); }
     .whatsapp-link .contact-icon { color: #3f8a63; }
     .instagram-link .contact-icon { color: #9b6a7f; }
     .call-link .contact-icon { color: #8b6a48; }
 
-    @supports (-webkit-touch-callout: none) {
-      .glass-card,
-      .topbar-inner,
-      .side-menu,
-      .gallery-main-btn,
-      .thumbs-hint span {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-      }
-    }
-
-    @media (max-width: 720px) {
-      :root { --header-h: 72px; }
-
-      .gallery-main {
-        aspect-ratio: 16 / 10.5;
-      }
-    }
-
     @media (max-width: 700px) {
-      .prices-layout {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .prices-divider {
-        width: 100%;
-        height: 1px;
-        min-height: 1px;
-      }
-
-      .prices-column.weekdays,
-      .prices-column.holidays,
-      html[dir="ltr"] .prices-column.weekdays,
-      html[dir="ltr"] .prices-column.holidays {
-        order: initial;
-        text-align: start;
-      }
+      .prices-layout { grid-template-columns: 1fr; gap: 14px; }
+      .prices-divider { width: 100%; height: 1px; min-height: 1px; }
+      .prices-column.weekdays, .prices-column.holidays, html[dir="ltr"] .prices-column.weekdays, html[dir="ltr"] .prices-column.holidays { order: initial; text-align: start; }
     }
 
     @media (max-width: 560px) {
@@ -996,130 +205,29 @@
       .topbar-inner { padding: 10px 12px; }
       .brand-title { font-size: 18px; }
       .logo-box { width: 50px; height: 50px; border-radius: 16px; }
-      .topbar-actions { gap: 8px; }
-
-      .menu-btn {
-        width: 44px;
-        min-width: 44px;
-        height: 44px;
-        padding: 0;
-      }
-
-      .lang-btn {
-        min-height: 44px;
-        padding: 0 14px;
-      }
-
-      .section-card,
-      .calendar-card {
-        border-radius: 26px;
-      }
-
-      .section-card {
-        padding: 16px;
-      }
-
-      .gallery-card {
-        padding: 0 0 12px;
-      }
-
-      .title-block {
-        padding: 6px 2px 6px;
-      }
-
-      .page-title {
-        font-size: 32px;
-      }
-
-      .section-title {
-        font-size: 24px;
-      }
-
-      .detail-copy,
-      .price-line {
-        font-size: 14px;
-      }
-
-      .amenities-grid {
-        gap: 18px 4px;
-      }
-
-      .amenity-item {
-        min-height: 80px;
-      }
-
-      .amenity-icon {
-        font-size: 26px;
-      }
-
-      .amenity-label {
-        font-size: 12px;
-      }
-
-      .thumb-btn {
-        flex-basis: 92px;
-        height: 68px;
-      }
-
-      .gallery-main-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-      }
-
-      .thumbs-hint {
-        width: 44px;
-      }
-
-      .thumbs-track {
-        padding-inline: 44px;
-      }
-
-      .price-title {
-        font-size: 15px;
-      }
-
-      .omr-symbol-img {
-        width: 14px;
-        height: 14px;
-      }
-
-      .calendar-top {
-        padding: 18px 14px 12px;
-      }
-
-      .fc .fc-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 10px 8px 0;
-      }
-
-      .fc .fc-toolbar-chunk {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
+      .menu-btn { width: 44px; min-width: 44px; height: 44px; padding: 0; }
+      .lang-btn { min-height: 44px; padding: 0 14px; }
+      .section-card, .calendar-card { border-radius: 26px; }
+      .section-card { padding: 16px; }
+      .gallery-card { padding: 0 0 12px; }
+      .title-block { padding: 6px 2px 6px; }
+      .page-title { font-size: 32px; }
+      .section-title { font-size: 24px; }
+      .detail-copy, .price-line { font-size: 14px; }
+      .amenities-grid { gap: 18px 4px; }
+      .amenity-item { min-height: 80px; }
+      .amenity-icon { font-size: 26px; }
+      .amenity-label { font-size: 12px; }
+      .thumb-btn { flex-basis: 92px; height: 68px; }
+      .gallery-main-btn { width: 30px; height: 30px; font-size: 16px; }
+      .calendar-top { padding: 18px 14px 12px; }
+      .fc .fc-toolbar { flex-direction: column; align-items: stretch; padding: 10px 8px 0; }
+      .fc .fc-toolbar-chunk { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
       .fc .fc-daygrid-day-frame { min-height: 78px; }
       .fc-daygrid-event { font-size: 10px; padding: 3px 5px; }
-
       .side-menu { width: min(90vw, 300px); }
-
-      .menu-link,
-      .menu-sub-link { font-size: 16px; }
-
       .map-thumb { width: 50%; }
-
       .contact-actions { gap: 24px; }
-
-      .contact-icon,
-      .contact-icon svg {
-        width: 30px;
-        height: 30px;
-      }
-
-      .contact-label { font-size: 13px; }
     }
   </style>
 </head>
@@ -1133,13 +241,10 @@
         </div>
         <div class="brand-title" data-i18n="topbarBrand">شاليهات رافانا</div>
       </div>
-
       <div class="topbar-actions">
         <button class="lang-btn" id="langToggle" type="button">EN</button>
         <button class="menu-btn" id="menuToggle" type="button" aria-label="Open menu">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
       </div>
     </div>
@@ -1152,10 +257,8 @@
       <strong data-i18n="menuTitle">التنقل</strong>
       <button class="close-btn" id="closeMenuBtn" type="button">×</button>
     </div>
-
     <nav class="side-menu-links">
       <a href="index.html" class="menu-link nav-link" data-i18n="menuHome">الرئيسية</a>
-
       <div class="menu-group">
         <span class="menu-group-title" data-i18n="menuOurChalets">شاليهاتنا</span>
         <div class="menu-sub-links">
@@ -1164,7 +267,6 @@
           <a href="chalet-c.html" class="menu-sub-link nav-link" data-i18n="menuChaletC">شاليه رافانا C</a>
         </div>
       </div>
-
       <a href="rules.html" class="menu-link nav-link" data-i18n="menuRules">الشروط والضوابط</a>
       <a href="#" class="menu-link" data-scroll-target="contactSection" data-i18n="menuContact">تواصل معنا</a>
     </nav>
@@ -1175,14 +277,12 @@
       <section class="title-block">
         <h1 class="page-title" id="pageChaletName">شاليه رافانا</h1>
       </section>
-
       <section class="section-card glass-card gallery-card">
         <div class="gallery-main" id="galleryMain">
           <button class="gallery-main-btn prev" id="galleryPrevBtn" type="button">‹</button>
           <img id="mainGalleryImage" class="gallery-main-image" src="" alt="Chalet Image">
           <button class="gallery-main-btn next" id="galleryNextBtn" type="button">›</button>
         </div>
-
         <div class="thumbs-wrap">
           <div class="thumbs-hint thumbs-hint-start"><span>‹</span></div>
           <div class="thumbs-track" id="thumbTrack"></div>
@@ -1224,75 +324,49 @@
               <h2 class="section-title" data-i18n="calendarTitle">التوفر والحجز</h2>
               <span data-i18n="calendarSub">يعرض هذا التقويم توفر الشاليه الحالي فقط</span>
             </div>
-
             <div class="legend">
               <span class="legend-item"><i class="legend-dot success"></i><span data-i18n="legendAvailable">متاح</span></span>
               <span class="legend-item"><i class="legend-dot danger"></i><span data-i18n="legendBooked">محجوز</span></span>
             </div>
           </div>
-
           <div class="calendar-wrapper">
             <div class="loading-overlay" id="calendarLoading">
               <div class="loading-box">
-                <div class="loading-logo">
-                  <img src="logo.webp" alt="Ravana Chalets" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'">
-                </div>
+                <div class="loading-logo"><img src="logo.webp" alt="Ravana Chalets" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'"></div>
                 <div class="loading-spinner"></div>
                 <div class="loading-text" data-i18n="loadingTitle">جاري تحميل التقويم</div>
                 <div class="loading-subtext" data-i18n="loadingSub">يرجى الانتظار قليلاً</div>
               </div>
             </div>
-
             <div id="calendar"></div>
           </div>
-
-          <div class="fallback" id="calendarError">
-            تعذر تحميل بيانات التقويم. تأكد من إعدادات Supabase والبيانات، ثم أعد تحديث الصفحة.
-          </div>
+          <div class="fallback" id="calendarError">تعذر تحميل بيانات التقويم. تأكد من إعدادات Supabase والبيانات، ثم أعد تحديث الصفحة.</div>
         </div>
       </section>
 
       <section class="location-section">
         <h2 class="section-title" data-i18n="locationTitle">موقعنا</h2>
         <p class="detail-copy" data-i18n="locationPlace">نزوى، عمان</p>
-
         <div class="location-media">
           <a class="map-link" id="mapLink" href="https://maps.google.com/?q=Nizwa,Oman" target="_blank" rel="noopener noreferrer">
-            <div class="map-thumb">
-              <img src="images/location-satellite.webp" alt="Nizwa, Oman" loading="lazy" decoding="async" onerror="this.style.display='none'">
-            </div>
+            <div class="map-thumb"><img src="images/location-satellite.webp" alt="Nizwa, Oman" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
           </a>
         </div>
       </section>
 
       <section class="contact-section" id="contactSection">
         <h2 class="section-title" data-i18n="contactTitle">تواصل معنا</h2>
-
         <div class="contact-actions">
           <a class="contact-link whatsapp-link" id="contactWhatsapp" href="https://wa.me/96800000000" target="_blank" rel="noopener noreferrer">
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.52 3.48A11.82 11.82 0 0 0 12.07 0C5.55 0 .24 5.3.24 11.82c0 2.08.55 4.12 1.6 5.92L0 24l6.46-1.7a11.8 11.8 0 0 0 5.61 1.43h.01c6.52 0 11.83-5.3 11.83-11.82 0-3.16-1.23-6.12-3.39-8.43ZM12.08 21.7h-.01a9.84 9.84 0 0 1-5.01-1.37l-.36-.21-3.83 1 1.03-3.73-.23-.38a9.8 9.8 0 0 1-1.5-5.2c0-5.44 4.43-9.87 9.88-9.87 2.63 0 5.11 1.02 6.97 2.89a9.78 9.78 0 0 1 2.89 6.98c0 5.44-4.43 9.87-9.87 9.87Zm5.42-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.28-.47-2.43-1.5-.9-.8-1.5-1.8-1.68-2.1-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.25 5.13 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
-              </svg>
-            </span>
+            <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.82 11.82 0 0 0 12.07 0C5.55 0 .24 5.3.24 11.82c0 2.08.55 4.12 1.6 5.92L0 24l6.46-1.7a11.8 11.8 0 0 0 5.61 1.43h.01c6.52 0 11.83-5.3 11.83-11.82 0-3.16-1.23-6.12-3.39-8.43ZM12.08 21.7h-.01a9.84 9.84 0 0 1-5.01-1.37l-.36-.21-3.83 1 1.03-3.73-.23-.38a9.8 9.8 0 0 1-1.5-5.2c0-5.44 4.43-9.87 9.88-9.87 2.63 0 5.11 1.02 6.97 2.89a9.78 9.78 0 0 1 2.89 6.98c0 5.44-4.43 9.87-9.87 9.87Zm5.42-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.28-.47-2.43-1.5-.9-.8-1.5-1.8-1.68-2.1-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.25 5.13 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg></span>
             <span class="contact-label" data-i18n="contactWhatsapp">واتساب</span>
           </a>
-
           <a class="contact-link instagram-link" id="contactInstagram" href="https://instagram.com/youraccount" target="_blank" rel="noopener noreferrer">
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm8.5 1.8h-8.5A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.8A3.2 3.2 0 1 0 12 15.2 3.2 3.2 0 0 0 12 8.8Zm5.15-2.4a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/>
-              </svg>
-            </span>
+            <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm8.5 1.8h-8.5A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.8A3.2 3.2 0 1 0 12 15.2 3.2 3.2 0 0 0 12 8.8Zm5.15-2.4a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></svg></span>
             <span class="contact-label" data-i18n="contactInstagram">انستجرام</span>
           </a>
-
           <a class="contact-link call-link" id="contactCall" href="tel:+96800000000">
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6.62 10.79a15.54 15.54 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.19 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2Z"/>
-              </svg>
-            </span>
+            <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.54 15.54 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.19 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2Z"/></svg></span>
             <span class="contact-label" data-i18n="contactCall">اتصل بنا</span>
           </a>
         </div>
@@ -1301,208 +375,52 @@
   </main>
 
   <script>
-
-const SUPABASE_URL = 'https://ywhumxkejpnzfkvvxxvd.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
+    const SUPABASE_URL = 'https://ywhumxkejpnzfkvvxxvd.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
     const SUPABASE_BOOKINGS_TABLE = 'rafana_bookings';
-    const SUPABASE_RECEIPTS_BUCKET = 'payment-receipts';
-    const CALENDAR_AVAILABLE_DAYS = 730;
-    const RAVANA_RESORT_NAMES = ['شاليه رافانا A', 'شاليه رافانا B', 'شاليه رافانا C'];
 
-    function isSupabaseConfigured() {
-      return SUPABASE_URL &&
-        SUPABASE_ANON_KEY &&
-        !SUPABASE_URL.includes('YOUR-PROJECT') &&
-        SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY';
-    }
+    function supabaseRestBase() { return SUPABASE_URL.replace(/\/$/, '') + '/rest/v1'; }
+    function supabaseHeaders(extra) { return Object.assign({ apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY, Accept: 'application/json' }, extra || {}); }
 
-    function ensureSupabaseConfigured() {
-      if (!isSupabaseConfigured()) {
-        throw new Error('يرجى ضبط SUPABASE_URL و SUPABASE_ANON_KEY داخل الملف.');
-      }
-    }
-
-    function supabaseRestBase() {
-      return SUPABASE_URL.replace(/\/$/, '') + '/rest/v1';
-    }
-
-    function supabaseStorageBase() {
-      return SUPABASE_URL.replace(/\/$/, '') + '/storage/v1';
-    }
-
-    function supabaseHeaders(extra) {
-      return Object.assign({
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
-        Accept: 'application/json'
-      }, extra || {});
-    }
-
-    function supabaseIsoDate(value) {
+    function normalizeDate(value) {
       if (!value) return '';
       if (typeof value === 'string') return value.trim().slice(0, 10);
-      const d = new Date(value);
-      if (isNaN(d.getTime())) return '';
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
+      const d = new Date(value); if (isNaN(d.getTime())) return '';
+      const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
       return y + '-' + m + '-' + day;
     }
-
-    function supabaseTodayIso() {
-      const d = new Date();
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return y + '-' + m + '-' + day;
-    }
-
-    function supabaseAddDays(dateStr, days) {
-      const d = new Date(dateStr + 'T00:00:00');
-      d.setDate(d.getDate() + days);
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return y + '-' + m + '-' + day;
-    }
-
-    function getSupabaseResorts(resortFilter) {
-      const value = String(resortFilter || '').trim();
-      return value ? [value] : RAVANA_RESORT_NAMES.slice();
-    }
+    function supabaseTodayIso() { return normalizeDate(new Date()); }
 
     function mapSupabaseBookingRow(row) {
-      const date = supabaseIsoDate(row.booking_date || row.date || row['التاريخ']);
-      const resort = String(row.resort || row['الاستراحة'] || row['الشاليه'] || '').trim();
-      const status = String(row.status || row['الحالة'] || 'متاح').trim() || 'متاح';
-      const bookingType = String(row.booking_type || row.bookingType || row['نوع الحجز'] || '').trim();
-      const name = String(row.customer_name || row.name || row['الاسم'] || '').trim();
-      const phone = String(row.phone || row['الجوال'] || '').trim();
-      const notes = String(row.notes || row['ملاحظات'] || '').trim();
-      const bookingPrice = row.booking_price != null ? String(row.booking_price) : String(row.bookingPrice || row['سعر الحجز'] || '');
-      const refundableDeposit = row.refundable_deposit != null ? String(row.refundable_deposit) : String(row.refundableDeposit || row['التأمين المسترد'] || '');
-      const receiptUrl = String(row.receipt_url || row.payment_receipt_url || row['رابط الإيصال'] || '').trim();
-
       return {
         id: row.id || '',
-        date: date,
-        resort: resort,
-        status: status,
-        bookingType: bookingType,
-        name: name,
-        phone: phone,
-        notes: notes,
-        bookingPrice: bookingPrice,
-        refundableDeposit: refundableDeposit,
-        receiptUrl: receiptUrl,
-        'التاريخ': date,
-        'تاريخ الحجز': date,
-        'الاستراحة': resort,
-        'الشاليه': resort,
-        'اسم الشاليه': resort,
-        'الحالة': status,
-        'حالة الحجز': status,
-        'نوع الحجز': bookingType,
-        'الاسم': name,
-        'الجوال': phone,
-        'ملاحظات': notes,
-        'سعر الحجز': bookingPrice,
-        'التأمين المسترد': refundableDeposit,
-        'رابط الإيصال': receiptUrl
+        checkIn: normalizeDate(row.check_in || row.checkIn),
+        checkOut: normalizeDate(row.check_out || row.checkOut),
+        resort: String(row.resort || '').trim(),
+        status: String(row.status || 'متاح').trim()
       };
     }
 
-    function buildSupabaseAvailabilityRows(resortFilter) {
-      const rows = [];
-      const start = supabaseTodayIso();
-      const resorts = getSupabaseResorts(resortFilter);
-
-      for (let i = 0; i < CALENDAR_AVAILABLE_DAYS; i++) {
-        const date = supabaseAddDays(start, i);
-
-        resorts.forEach(function(resort) {
-          rows.push(mapSupabaseBookingRow({
-            booking_date: date,
-            resort: resort,
-            status: 'متاح'
-          }));
-        });
-      }
-
-      return rows;
-    }
-
-    function mergeSupabaseBookingsWithAvailability(bookings, resortFilter) {
-      const map = new Map();
-
-      buildSupabaseAvailabilityRows(resortFilter).forEach(function(row) {
-        map.set(row['التاريخ'] + '|' + row['الاستراحة'], row);
-      });
-
-      bookings.map(mapSupabaseBookingRow).forEach(function(row) {
-        if (!row['التاريخ'] || !row['الاستراحة']) return;
-        map.set(row['التاريخ'] + '|' + row['الاستراحة'], row);
-      });
-
-      return Array.from(map.values());
-    }
-
-    async function fetchSupabaseStoredBookings(resortFilter) {
-      ensureSupabaseConfigured();
-
+    async function fetchSupabaseStoredBookings(resort) {
       const params = new URLSearchParams();
       params.set('select', '*');
-      params.set('order', 'booking_date.asc');
-
-      const resort = String(resortFilter || '').trim();
-      if (resort) {
-        params.set('resort', 'eq.' + resort);
-      }
-
-      const response = await fetch(supabaseRestBase() + '/' + SUPABASE_BOOKINGS_TABLE + '?' + params.toString(), {
-        method: 'GET',
-        cache: 'no-store',
-        headers: supabaseHeaders()
-      });
-
+      params.set('order', 'check_in.asc');
+      if (resort) params.set('resort', 'eq.' + resort);
+      const response = await fetch(supabaseRestBase() + '/' + SUPABASE_BOOKINGS_TABLE + '?' + params.toString(), { method: 'GET', cache: 'no-store', headers: supabaseHeaders() });
       const text = await response.text();
       let json = [];
-
-      try {
-        json = text ? JSON.parse(text) : [];
-      } catch (e) {
-        throw new Error('تعذر قراءة رد Supabase.');
-      }
-
-      if (!response.ok) {
-        throw new Error((json && json.message) || text || ('HTTP ' + response.status + ' failed'));
-      }
-
+      try { json = text ? JSON.parse(text) : []; } catch (e) {}
+      if (!response.ok) throw new Error((json && json.message) || text || 'Error');
       return Array.isArray(json) ? json : [];
     }
-
-    async function fetchSupabaseCalendarJson(resortFilter) {
-      const rows = await fetchSupabaseStoredBookings(resortFilter);
-      return {
-        success: true,
-        data: mergeSupabaseBookingsWithAvailability(rows, resortFilter)
-      };
-    }
-    const API_VERSION = '2026-05-02-chalet-local-fullcalendar-v1';
 
     const LANGUAGE_STORAGE_KEY = 'ravana_lang';
     const GOOGLE_MAPS_URL = 'https://maps.google.com/?q=Nizwa,Oman';
     const CONTACT_WHATSAPP_URL = 'https://wa.me/96800000000';
     const CONTACT_INSTAGRAM_URL = 'https://instagram.com/youraccount';
     const CONTACT_CALL_URL = 'tel:+96800000000';
-
-    const FULLCALENDAR_JS_URLS = [
-      './libs/fullcalendar/index.global.min.js'
-    ];
-
-    const FULLCALENDAR_LOCALE_URLS = [
-      './libs/fullcalendar/locales-all.global.min.js'
-    ];
+    const FULLCALENDAR_JS_URLS = ['./libs/fullcalendar/index.global.min.js', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'];
+    const FULLCALENDAR_LOCALE_URLS = ['./libs/fullcalendar/locales-all.global.min.js', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/locales/ar.global.min.js'];
 
     const COMMON_AMENITIES = [
       { key: 'bedroom', icon: '🛏️', ar: 'غرفة نوم بسرير مزدوج', en: 'Bedroom with Double Bed' },
@@ -1518,135 +436,46 @@ const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
 
     const CHALET_DATA = {
       A: {
-        nameAr: 'شاليه رافانا A',
-        nameEn: 'Ravana Chalet A',
-        resortValue: 'شاليه رافانا A',
-        descriptionAr: 'شاليه رافانا A يمنحكم تجربة إقامة هادئة وخاصة بتصميم أنيق وأجواء دافئة تناسب الاسترخاء وقضاء أجمل الأوقات مع العائلة أو الأصدقاء. يجمع الشاليه بين الخصوصية والراحة، مع مرافق مختارة بعناية لتكون إقامتكم أكثر تميزًا.',
-        descriptionEn: 'Ravana Chalet A offers a calm and private stay with elegant design and a warm atmosphere, perfect for relaxing and enjoying memorable moments with family or friends. The chalet combines privacy, comfort, and carefully selected amenities for a refined stay.',
-        images: [
-          './images/resort-a-1.webp',
-          './images/resort-a-2.webp',
-          './images/resort-a-3.webp',
-          './images/resort-a-4.webp'
-        ],
-        amenities: COMMON_AMENITIES,
-        prices: {
-          weekdaysDayUse: '35',
-          weekdaysOvernight: '50',
-          holidaysDayUse: '45',
-          holidaysOvernight: '60'
-        }
+        nameAr: 'شاليه رافانا A', nameEn: 'Ravana Chalet A', resortValue: 'شاليه رافانا A',
+        descriptionAr: 'شاليه رافانا A يمنحكم تجربة إقامة هادئة وخاصة بتصميم أنيق وأجواء دافئة تناسب الاسترخاء وقضاء أجمل الأوقات.',
+        descriptionEn: 'Ravana Chalet A offers a calm and private stay with elegant design and a warm atmosphere.',
+        images: ['./images/resort-a-1.webp', './images/resort-a-2.webp', './images/resort-a-3.webp', './images/resort-a-4.webp'],
+        amenities: COMMON_AMENITIES, prices: { weekday: 55, holiday: 70 }
       },
       B: {
-        nameAr: 'شاليه رافانا B',
-        nameEn: 'Ravana Chalet B',
-        resortValue: 'شاليه رافانا B',
-        descriptionAr: 'شاليه رافانا B صُمم ليكون مساحة مريحة وراقية لمن يبحث عن الخصوصية والهدوء. أجواؤه العصرية وتفاصيله الدافئة تجعله خيارًا مناسبًا للإقامة القصيرة أو قضاء يوم مميز بعيدًا عن الروتين.',
-        descriptionEn: 'Ravana Chalet B is designed as a refined and comfortable private space for guests seeking calm and privacy. Its modern atmosphere and warm details make it ideal for short stays or a special day away from routine.',
-        images: [
-          './images/resort-b-1.webp',
-          './images/resort-b-2.webp',
-          './images/resort-b-3.webp',
-          './images/resort-b-4.webp'
-        ],
-        amenities: COMMON_AMENITIES,
-        prices: {
-          weekdaysDayUse: '35',
-          weekdaysOvernight: '50',
-          holidaysDayUse: '45',
-          holidaysOvernight: '60'
-        }
+        nameAr: 'شاليه رافانا B', nameEn: 'Ravana Chalet B', resortValue: 'شاليه رافانا B',
+        descriptionAr: 'شاليه رافانا B صُمم ليكون مساحة مريحة وراقية لمن يبحث عن الخصوصية والهدوء.',
+        descriptionEn: 'Ravana Chalet B is designed as a refined and comfortable private space.',
+        images: ['./images/resort-b-1.webp', './images/resort-b-2.webp', './images/resort-b-3.webp', './images/resort-b-4.webp'],
+        amenities: COMMON_AMENITIES, prices: { weekday: 58, holiday: 74 }
       },
       C: {
-        nameAr: 'شاليه رافانا C',
-        nameEn: 'Ravana Chalet C',
-        resortValue: 'شاليه رافانا C',
-        descriptionAr: 'شاليه رافانا C يوفر أجواء خاصة وهادئة تجمع بين الراحة والبساطة الراقية. المساحات مصممة لتمنحكم تجربة إقامة مريحة مع مرافق عملية تناسب العائلة والأصدقاء.',
-        descriptionEn: 'Ravana Chalet C provides a private and peaceful atmosphere that combines comfort with refined simplicity. Its spaces are designed to offer a relaxed stay with practical amenities for families and friends.',
-        images: [
-          './images/resort-c-1.webp',
-          './images/resort-c-2.webp',
-          './images/resort-c-3.webp',
-          './images/resort-c-4.webp'
-        ],
-        amenities: COMMON_AMENITIES,
-        prices: {
-          weekdaysDayUse: '35',
-          weekdaysOvernight: '50',
-          holidaysDayUse: '45',
-          holidaysOvernight: '60'
-        }
+        nameAr: 'شاليه رافانا C', nameEn: 'Ravana Chalet C', resortValue: 'شاليه رافانا C',
+        descriptionAr: 'شاليه رافانا C يوفر أجواء خاصة وهادئة تجمع بين الراحة والبساطة الراقية.',
+        descriptionEn: 'Ravana Chalet C provides a private and peaceful atmosphere that combines comfort with simplicity.',
+        images: ['./images/resort-c-1.webp', './images/resort-c-2.webp', './images/resort-c-3.webp', './images/resort-c-4.webp'],
+        amenities: COMMON_AMENITIES, prices: { weekday: 56, holiday: 72 }
       }
     };
 
     const I18N = {
       ar: {
-        dir: 'rtl',
-        langButton: 'EN',
-        topbarBrand: 'شاليهات رافانا',
-        menuTitle: 'التنقل',
-        menuHome: 'الرئيسية',
-        menuOurChalets: 'شاليهاتنا',
-        menuChaletA: 'شاليه رافانا A',
-        menuChaletB: 'شاليه رافانا B',
-        menuChaletC: 'شاليه رافانا C',
-        menuRules: 'الشروط والضوابط',
-        menuContact: 'تواصل معنا',
-        detailsTitle: 'تفاصيل الشاليه',
-        amenitiesTitle: 'المرافق والخدمات',
-        pricesTitle: 'أسعار الشاليه',
-        pricesWeekdays: 'أيام الأسبوع:',
-        pricesHolidays: 'الإجازات الرسمية:',
-        priceDayUse: 'بدون مبيت',
-        priceOvernight: 'مع مبيت',
-        calendarTitle: 'التوفر والحجز',
-        calendarSub: 'يعرض هذا التقويم توفر الشاليه الحالي فقط',
-        legendAvailable: 'متاح',
-        legendBooked: 'محجوز',
-        loadingTitle: 'جاري تحميل التقويم',
-        loadingSub: 'يرجى الانتظار قليلاً',
-        calendarLibraryError: 'تعذر تحميل مكتبة التقويم. تأكد من رفع ملفات FullCalendar داخل مجلد libs/fullcalendar.',
-        calendarDataError: 'تعذر تحميل بيانات التقويم. تأكد من إعدادات Supabase والبيانات، ثم أعد تحديث الصفحة.',
-        locationTitle: 'موقعنا',
-        locationPlace: 'نزوى، عمان',
-        contactTitle: 'تواصل معنا',
-        contactWhatsapp: 'واتساب',
-        contactInstagram: 'انستجرام',
-        contactCall: 'اتصل بنا'
+        dir: 'rtl', langButton: 'EN', topbarBrand: 'شاليهات رافانا', menuTitle: 'التنقل', menuHome: 'الرئيسية', menuOurChalets: 'شاليهاتنا',
+        menuChaletA: 'شاليه رافانا A', menuChaletB: 'شاليه رافانا B', menuChaletC: 'شاليه رافانا C', menuRules: 'الشروط والضوابط', menuContact: 'تواصل معنا',
+        detailsTitle: 'تفاصيل الشاليه', amenitiesTitle: 'المرافق والخدمات', pricesTitle: 'أسعار الشاليه',
+        pricesWeekdays: 'أيام الأسبوع:', pricesHolidays: 'الإجازات الرسمية:', perNight: 'لليلة الواحدة',
+        calendarTitle: 'التوفر والحجز', calendarSub: 'يعرض هذا التقويم توفر الشاليه الحالي فقط', legendAvailable: 'متاح', legendBooked: 'محجوز',
+        loadingTitle: 'جاري تحميل التقويم', loadingSub: 'يرجى الانتظار قليلاً', calendarDataError: 'تعذر تحميل بيانات التقويم.',
+        locationTitle: 'موقعنا', locationPlace: 'نزوى، عمان', contactTitle: 'تواصل معنا', contactWhatsapp: 'واتساب', contactInstagram: 'انستجرام', contactCall: 'اتصل بنا'
       },
       en: {
-        dir: 'ltr',
-        langButton: 'AR',
-        topbarBrand: 'Ravana Chalets',
-        menuTitle: 'Navigation',
-        menuHome: 'Home',
-        menuOurChalets: 'Our Chalets',
-        menuChaletA: 'Ravana Chalet A',
-        menuChaletB: 'Ravana Chalet B',
-        menuChaletC: 'Ravana Chalet C',
-        menuRules: 'Terms & Rules',
-        menuContact: 'Contact Us',
-        detailsTitle: 'Chalet Details',
-        amenitiesTitle: 'Amenities & Services',
-        pricesTitle: 'Chalet Prices',
-        pricesWeekdays: 'Weekdays:',
-        pricesHolidays: 'Official Holidays:',
-        priceDayUse: 'Without Overnight',
-        priceOvernight: 'With Overnight',
-        calendarTitle: 'Availability & Booking',
-        calendarSub: 'This calendar shows availability for the current chalet only',
-        legendAvailable: 'Available',
-        legendBooked: 'Booked',
-        loadingTitle: 'Loading Calendar',
-        loadingSub: 'Please wait a moment',
-        calendarLibraryError: 'Unable to load the calendar library. Make sure FullCalendar files are uploaded inside libs/fullcalendar.',
-        calendarDataError: 'Unable to load calendar data. Please check Supabase settings and data, then refresh.',
-        locationTitle: 'Our Location',
-        locationPlace: 'Nizwa, Oman',
-        contactTitle: 'Contact Us',
-        contactWhatsapp: 'WhatsApp',
-        contactInstagram: 'Instagram',
-        contactCall: 'Call Us'
+        dir: 'ltr', langButton: 'AR', topbarBrand: 'Ravana Chalets', menuTitle: 'Navigation', menuHome: 'Home', menuOurChalets: 'Our Chalets',
+        menuChaletA: 'Ravana Chalet A', menuChaletB: 'Ravana Chalet B', menuChaletC: 'Ravana Chalet C', menuRules: 'Terms & Rules', menuContact: 'Contact Us',
+        detailsTitle: 'Chalet Details', amenitiesTitle: 'Amenities & Services', pricesTitle: 'Chalet Prices',
+        pricesWeekdays: 'Weekdays:', pricesHolidays: 'Official Holidays:', perNight: 'per night',
+        calendarTitle: 'Availability & Booking', calendarSub: 'This calendar shows availability for the current chalet only', legendAvailable: 'Available', legendBooked: 'Booked',
+        loadingTitle: 'Loading Calendar', loadingSub: 'Please wait a moment', calendarDataError: 'Unable to load calendar data.',
+        locationTitle: 'Our Location', locationPlace: 'Nizwa, Oman', contactTitle: 'Contact Us', contactWhatsapp: 'WhatsApp', contactInstagram: 'Instagram', contactCall: 'Call Us'
       }
     };
 
@@ -1657,26 +486,10 @@ const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
     const sideMenuOverlay = document.getElementById('sideMenuOverlay');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
 
-    const pageChaletName = document.getElementById('pageChaletName');
-    const mainGalleryImage = document.getElementById('mainGalleryImage');
-    const galleryMain = document.getElementById('galleryMain');
-    const galleryPrevBtn = document.getElementById('galleryPrevBtn');
-    const galleryNextBtn = document.getElementById('galleryNextBtn');
-    const thumbTrack = document.getElementById('thumbTrack');
-    const amenitiesGrid = document.getElementById('amenitiesGrid');
-    const chaletDescription = document.getElementById('chaletDescription');
-    const priceWeekdays = document.getElementById('priceWeekdays');
-    const priceHolidays = document.getElementById('priceHolidays');
-
-    const contactWhatsapp = document.getElementById('contactWhatsapp');
-    const contactInstagram = document.getElementById('contactInstagram');
-    const contactCall = document.getElementById('contactCall');
-
     let currentLang = 'ar';
     let currentGalleryIndex = 0;
     let bookingData = [];
     let calendar = null;
-    let touchStartX = 0;
     let isAnimatingMainImage = false;
     let calendarDataLoaded = false;
     let calendarDataRequest = null;
@@ -1689,577 +502,168 @@ const SUPABASE_ANON_KEY = 'sb_publishable_08n0jwiyG7bkqATkyyL7yA_WBgELYt5';
       if (path.includes('chalet-c')) return 'C';
       return 'A';
     }
-
     const currentChaletCode = detectChaletCode();
+    function chalet() { return CHALET_DATA[currentChaletCode]; }
+    function t(key) { return I18N[currentLang][key] || key; }
+    function saveLanguagePreference() { try { localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLang); } catch (e) {} }
+    function loadLanguagePreference() { try { const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY); if (saved && I18N[saved]) currentLang = saved; } catch (e) {} }
+    function isPastDate(dateStr) { return dateStr < supabaseTodayIso(); }
 
-    function chalet() {
-      return CHALET_DATA[currentChaletCode];
-    }
-
-    function t(key) {
-      return I18N[currentLang][key] || key;
-    }
-
-    function getField(item, names) {
-      if (!item) return '';
-
-      for (let i = 0; i < names.length; i++) {
-        const name = names[i];
-        if (Object.prototype.hasOwnProperty.call(item, name)) {
-          return item[name];
-        }
-      }
-
-      return '';
-    }
-
-    function saveLanguagePreference() {
-      try {
-        localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLang);
-      } catch (e) {}
-    }
-
-    function loadLanguagePreference() {
-      try {
-        const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-        if (saved && I18N[saved]) {
-          currentLang = saved;
-        }
-      } catch (e) {}
-    }
-
-    function normalizeDate(value) {
-      if (!value) return '';
-      if (typeof value === 'string') return value.trim().slice(0, 10);
-
-      const date = new Date(value);
-      if (isNaN(date.getTime())) return '';
-
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-
-      return year + '-' + month + '-' + day;
-    }
-
-    function todayString() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-
-      return year + '-' + month + '-' + day;
-    }
-
-    function isPastDate(dateStr) {
-      return dateStr < todayString();
-    }
-
-    function openMenu() {
-      document.body.classList.add('menu-open');
-    }
-
-    function closeMenu() {
-      document.body.classList.remove('menu-open');
-    }
-
-    function setCalendarError(message) {
-      calendarError.textContent = message || t('calendarDataError');
-      calendarError.style.display = 'block';
-    }
-
-    function clearCalendarError() {
-      calendarError.textContent = t('calendarDataError');
-      calendarError.style.display = 'none';
-    }
+    function openMenu() { document.body.classList.add('menu-open'); }
+    function closeMenu() { document.body.classList.remove('menu-open'); }
 
     function goToBooking(params = {}) {
       saveLanguagePreference();
-
       const query = new URLSearchParams();
-
-      if (params.date) query.set('date', params.date);
+      if (params.checkIn) query.set('checkIn', params.checkIn);
       if (params.resort) query.set('resort', params.resort);
-
-      const qs = query.toString();
-      window.location.href = 'booking.html' + (qs ? '?' + qs : '');
-    }
-
-    function loadExternalScript(src) {
-      return new Promise((resolve, reject) => {
-        if (document.querySelector('script[src="' + src + '"]')) {
-          resolve();
-          return;
-        }
-
-        const script = document.createElement('script');
-        script.src = src;
-        script.async = false;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
-    }
-
-    async function loadFirstWorkingScript(urls) {
-      let lastError = null;
-
-      for (const url of urls) {
-        try {
-          await loadExternalScript(url);
-          return url;
-        } catch (error) {
-          lastError = error;
-        }
-      }
-
-      throw lastError || new Error('FullCalendar JS failed');
+      window.location.href = 'booking.html?' + query.toString();
     }
 
     async function loadFullCalendarAssets() {
       if (fullCalendarAssetsLoaded) return;
-
-      if (fullCalendarAssetsLoading) {
-        return fullCalendarAssetsLoading;
-      }
-
-      fullCalendarAssetsLoading = loadFirstWorkingScript(FULLCALENDAR_JS_URLS)
-        .then(async () => {
-          try {
-            await loadFirstWorkingScript(FULLCALENDAR_LOCALE_URLS);
-          } catch (localeError) {
-            console.warn('FullCalendar locale file failed, calendar will continue.', localeError);
-          }
-
-          fullCalendarAssetsLoaded = true;
-        })
-        .catch(error => {
-          fullCalendarAssetsLoading = null;
-          throw error;
-        });
-
-      return fullCalendarAssetsLoading;
-    }
-
-    function centerActiveThumb() {
-      const activeThumb = thumbTrack.querySelector('.thumb-btn.active');
-      if (!activeThumb) return;
-
-      const targetScroll = activeThumb.offsetLeft - (thumbTrack.clientWidth / 2) + (activeThumb.clientWidth / 2);
-
-      thumbTrack.scrollTo({
-        left: Math.max(0, targetScroll),
-        behavior: 'smooth'
+      if (fullCalendarAssetsLoading) return fullCalendarAssetsLoading;
+      fullCalendarAssetsLoading = new Promise((resolve) => {
+        const script = document.createElement('script'); script.src = FULLCALENDAR_JS_URLS[0]; script.async = false;
+        script.onload = () => {
+          const loc = document.createElement('script'); loc.src = FULLCALENDAR_LOCALE_URLS[0]; loc.async = false;
+          loc.onload = () => { fullCalendarAssetsLoaded = true; resolve(); };
+          document.body.appendChild(loc);
+        };
+        document.body.appendChild(script);
       });
+      return fullCalendarAssetsLoading;
     }
 
     function switchMainImage(src, altText) {
       if (isAnimatingMainImage) return;
-
       isAnimatingMainImage = true;
-      mainGalleryImage.classList.add('changing');
-
+      document.getElementById('mainGalleryImage').classList.add('changing');
       setTimeout(() => {
-        mainGalleryImage.src = src;
-        mainGalleryImage.alt = altText;
-        mainGalleryImage.loading = 'eager';
-        mainGalleryImage.decoding = 'async';
-
-        mainGalleryImage.onerror = function () {
-          this.src = './images/resort-a-1.webp';
-        };
-
-        requestAnimationFrame(() => {
-          mainGalleryImage.classList.remove('changing');
-          isAnimatingMainImage = false;
-        });
+        document.getElementById('mainGalleryImage').src = src; document.getElementById('mainGalleryImage').alt = altText;
+        requestAnimationFrame(() => { document.getElementById('mainGalleryImage').classList.remove('changing'); isAnimatingMainImage = false; });
       }, 180);
     }
 
     function showGalleryImage(index) {
-      const data = chalet();
-      const total = data.images.length;
-
+      const total = chalet().images.length;
       currentGalleryIndex = (index + total) % total;
-
-      const src = data.images[currentGalleryIndex];
-      const altText = currentLang === 'ar' ? data.nameAr : data.nameEn;
-
-      switchMainImage(src, altText);
-
-      thumbTrack.querySelectorAll('.thumb-btn').forEach((btn, idx) => {
-        btn.classList.toggle('active', idx === currentGalleryIndex);
-      });
-
-      centerActiveThumb();
-    }
-
-    function nextGalleryImage() {
-      showGalleryImage(currentGalleryIndex + 1);
-    }
-
-    function prevGalleryImage() {
-      showGalleryImage(currentGalleryIndex - 1);
-    }
-
-    function updateGalleryArrowDirection() {
-      if (currentLang === 'ar') {
-        galleryPrevBtn.textContent = '›';
-        galleryNextBtn.textContent = '‹';
-      } else {
-        galleryPrevBtn.textContent = '‹';
-        galleryNextBtn.textContent = '›';
-      }
+      switchMainImage(chalet().images[currentGalleryIndex], currentLang === 'ar' ? chalet().nameAr : chalet().nameEn);
+      document.querySelectorAll('.thumb-btn').forEach((btn, idx) => btn.classList.toggle('active', idx === currentGalleryIndex));
     }
 
     function renderGallery() {
-      const data = chalet();
-      const altText = currentLang === 'ar' ? data.nameAr : data.nameEn;
-
-      thumbTrack.innerHTML = data.images.map((src, index) => `
-        <button class="thumb-btn ${index === currentGalleryIndex ? 'active' : ''}" type="button" data-gallery-index="${index}">
-          <img src="${src}" alt="${altText}" loading="lazy" decoding="async" onerror="this.style.display='none'">
-        </button>
-      `).join('');
-
-      const firstImage = data.images[currentGalleryIndex] || data.images[0];
-
-      mainGalleryImage.src = firstImage;
-      mainGalleryImage.alt = altText;
-      mainGalleryImage.loading = 'eager';
-      mainGalleryImage.decoding = 'async';
-
-      thumbTrack.querySelectorAll('[data-gallery-index]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          showGalleryImage(Number(btn.getAttribute('data-gallery-index')));
-        });
+      document.getElementById('thumbTrack').innerHTML = chalet().images.map((src, idx) => `
+        <button class="thumb-btn ${idx === currentGalleryIndex ? 'active' : ''}" type="button" data-gallery-index="${idx}">
+          <img src="${src}" alt="img" loading="lazy" onerror="this.style.display='none'">
+        </button>`).join('');
+      document.getElementById('mainGalleryImage').src = chalet().images[currentGalleryIndex];
+      document.querySelectorAll('[data-gallery-index]').forEach(btn => {
+        btn.addEventListener('click', () => showGalleryImage(Number(btn.getAttribute('data-gallery-index'))));
       });
-
-      centerActiveThumb();
     }
 
     function renderAmenities() {
-      amenitiesGrid.innerHTML = chalet().amenities.map(item => `
-        <div class="amenity-item">
-          <div class="amenity-icon icon-${item.key}">${item.icon}</div>
-          <div class="amenity-label">${currentLang === 'ar' ? item.ar : item.en}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderDescription() {
-      pageChaletName.textContent = currentLang === 'ar' ? chalet().nameAr : chalet().nameEn;
-      chaletDescription.textContent = currentLang === 'ar' ? chalet().descriptionAr : chalet().descriptionEn;
-      document.title = (currentLang === 'ar' ? chalet().nameAr : chalet().nameEn) + ' - ' + t('topbarBrand');
-    }
-
-    function formatPriceWithSymbol(value) {
-      return `
-        ${value}
-        <span class="omr-inline">
-          <img
-            class="omr-symbol-img"
-            src="images/omr-symbol.svg"
-            alt="OMR"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
-          >
-          <span class="omr-text-fallback" style="display:none;">OMR</span>
-        </span>
-      `;
+      document.getElementById('amenitiesGrid').innerHTML = chalet().amenities.map(item => `
+        <div class="amenity-item"><div class="amenity-icon icon-${item.key}">${item.icon}</div><div class="amenity-label">${currentLang === 'ar' ? item.ar : item.en}</div></div>`).join('');
     }
 
     function renderPrices() {
       const p = chalet().prices;
-
-      priceWeekdays.innerHTML = `
-        <strong class="price-title">${t('pricesWeekdays')}</strong>
-        <span class="price-line">- ${t('priceDayUse')} ${formatPriceWithSymbol(p.weekdaysDayUse)}</span>
-        <span class="price-line">- ${t('priceOvernight')} ${formatPriceWithSymbol(p.weekdaysOvernight)}</span>
-      `;
-
-      priceHolidays.innerHTML = `
-        <strong class="price-title">${t('pricesHolidays')}</strong>
-        <span class="price-line">- ${t('priceDayUse')} ${formatPriceWithSymbol(p.holidaysDayUse)}</span>
-        <span class="price-line">- ${t('priceOvernight')} ${formatPriceWithSymbol(p.holidaysOvernight)}</span>
-      `;
-    }
-
-    function buildCalendarApiUrl() {
-      return '';
-    }
-
-    function delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    async function fetchJsonWithRetry(url, attempts = 3) {
-      let lastError = null;
-
-      for (let attempt = 1; attempt <= attempts; attempt++) {
-        try {
-          const res = await fetch(url, { method: 'GET' });
-          const rawText = await res.text();
-
-          let json;
-
-          try {
-            json = JSON.parse(rawText);
-          } catch (e) {
-            console.error('Raw API response was not JSON:', rawText);
-            throw new Error('تعذر قراءة رد الخدمة.');
-          }
-
-          if (!res.ok || !json.success) {
-            throw new Error((json && json.message) || ('HTTP ' + res.status + ' failed'));
-          }
-
-          return json;
-        } catch (error) {
-          lastError = error;
-
-          if (attempt < attempts) {
-            await delay(600 * attempt);
-          }
-        }
-      }
-
-      throw lastError || new Error('Load error');
+      document.getElementById('priceWeekdays').innerHTML = `<strong class="price-title">${t('pricesWeekdays')}</strong><span class="price-line">${p.weekday} <span class="omr-inline"><img class="omr-symbol-img" src="images/omr-symbol.svg" alt="OMR"></span> / ${t('perNight')}</span>`;
+      document.getElementById('priceHolidays').innerHTML = `<strong class="price-title">${t('pricesHolidays')}</strong><span class="price-line">${p.holiday} <span class="omr-inline"><img class="omr-symbol-img" src="images/omr-symbol.svg" alt="OMR"></span> / ${t('perNight')}</span>`;
     }
 
     async function loadAllBookings() {
       if (calendarDataLoaded) return;
-
-      if (calendarDataRequest) {
-        return calendarDataRequest;
-      }
-
-      calendarDataRequest = fetchSupabaseCalendarJson(chalet().resortValue)
-        .then(json => {
-          bookingData = Array.isArray(json.data) ? json.data : [];
-          calendarDataLoaded = true;
-        })
-        .finally(() => {
-          calendarDataRequest = null;
-        });
-
+      if (calendarDataRequest) return calendarDataRequest;
+      calendarDataRequest = fetchSupabaseStoredBookings(chalet().resortValue).then(rows => {
+        bookingData = rows.map(mapSupabaseBookingRow); calendarDataLoaded = true;
+      }).finally(() => { calendarDataRequest = null; });
       return calendarDataRequest;
     }
 
+    function isDateAvailable(dateStr) {
+      return !bookingData.some(b => b.status !== 'متاح' && dateStr >= b.checkIn && dateStr < b.checkOut);
+    }
+
     function buildCalendarEvents() {
-      return bookingData
-        .map(item => {
-          const resort = String(getField(item, ['الاستراحة', 'الشاليه', 'اسم الشاليه']) || '').trim();
-          const date = normalizeDate(getField(item, ['التاريخ', 'تاريخ الحجز']));
-          const rawStatus = String(getField(item, ['الحالة', 'حالة الحجز']) || '').trim() || 'متاح';
-
-          if (!date || !resort) return null;
-          if (resort !== chalet().resortValue) return null;
-          if (isPastDate(date)) return null;
-
-          const isAvailable = rawStatus === 'متاح';
-
-          return {
-            title: isAvailable ? t('legendAvailable') : t('legendBooked'),
-            start: date,
-            allDay: true,
-            backgroundColor: isAvailable ? '#24a46d' : '#d45454',
-            borderColor: isAvailable ? '#24a46d' : '#d45454',
-            textColor: '#ffffff',
-            extendedProps: {
-              resort: chalet().resortValue,
-              date: date,
-              status: rawStatus
-            }
-          };
-        })
-        .filter(Boolean);
+      const events = [];
+      bookingData.forEach(item => {
+        if (item.status !== 'متاح') {
+          let d = new Date(item.checkIn + 'T12:00:00');
+          const end = new Date(item.checkOut + 'T12:00:00');
+          while (d < end) {
+            events.push({
+              title: t('legendBooked'), start: normalizeDate(d), allDay: true,
+              backgroundColor: '#d45454', borderColor: '#d45454', textColor: '#ffffff', extendedProps: { available: false }
+            });
+            d.setDate(d.getDate() + 1);
+          }
+        }
+      });
+      const startDay = new Date(supabaseTodayIso() + 'T12:00:00');
+      for (let i = 0; i < 365; i++) {
+        const dStr = normalizeDate(startDay);
+        if (isDateAvailable(dStr)) {
+          events.push({
+            title: t('legendAvailable'), start: dStr, allDay: true,
+            backgroundColor: '#24a46d', borderColor: '#24a46d', textColor: '#ffffff', extendedProps: { available: true }
+          });
+        }
+        startDay.setDate(startDay.getDate() + 1);
+      }
+      return events;
     }
 
     async function renderCalendar() {
       const calendarEl = document.getElementById('calendar');
-
-      try {
-        await loadFullCalendarAssets();
-      } catch (e) {
-        console.error('FullCalendar assets failed:', e);
-        setCalendarError(t('calendarLibraryError'));
-        calendarLoading.classList.add('hidden');
-        return;
-      }
-
-      if (!window.FullCalendar) {
-        setCalendarError(t('calendarLibraryError'));
-        calendarLoading.classList.add('hidden');
-        return;
-      }
-
-      if (calendar) {
-        calendar.destroy();
-      }
-
+      try { await loadFullCalendarAssets(); } catch (e) { calendarLoading.classList.add('hidden'); return; }
+      if (!window.FullCalendar) return;
+      if (calendar) calendar.destroy();
       calendar = new FullCalendar.Calendar(calendarEl, {
-        locale: currentLang === 'ar' ? 'ar' : 'en',
-        direction: currentLang === 'ar' ? 'rtl' : 'ltr',
-        initialView: 'dayGridMonth',
-        height: 'auto',
-        headerToolbar: {
-          right: currentLang === 'ar' ? 'prev,next today' : 'today prev,next',
-          center: 'title',
-          left: ''
-        },
+        locale: currentLang === 'ar' ? 'ar' : 'en', direction: currentLang === 'ar' ? 'rtl' : 'ltr',
+        initialView: 'dayGridMonth', height: 'auto',
+        headerToolbar: { right: currentLang === 'ar' ? 'prev,next today' : 'today prev,next', center: 'title', left: '' },
         buttonText: currentLang === 'ar' ? { today: 'اليوم' } : { today: 'Today' },
-        editable: false,
-        selectable: false,
-
-        loading(isLoading) {
-          if (isLoading) {
-            clearCalendarError();
-            calendarLoading.classList.remove('hidden');
-          } else {
-            calendarLoading.classList.add('hidden');
-          }
-        },
-
+        editable: false, selectable: false,
+        loading(isLoading) { isLoading ? calendarLoading.classList.remove('hidden') : calendarLoading.classList.add('hidden'); },
         events(fetchInfo, successCallback, failureCallback) {
-          loadAllBookings()
-            .then(() => {
-              clearCalendarError();
-              successCallback(buildCalendarEvents());
-            })
-            .catch(error => {
-              console.error('Calendar data failed:', error);
-
-              const details = error && error.message ? ' (' + error.message + ')' : '';
-
-              setCalendarError(t('calendarDataError') + details);
-              failureCallback(error);
-            });
+          loadAllBookings().then(() => { successCallback(buildCalendarEvents()); }).catch(e => failureCallback(e));
         },
-
         dateClick(info) {
           const clickedDate = normalizeDate(info.dateStr);
-
-          if (isPastDate(clickedDate)) return;
-
-          goToBooking({
-            date: clickedDate,
-            resort: chalet().resortValue
-          });
+          if (isPastDate(clickedDate) || !isDateAvailable(clickedDate)) return;
+          goToBooking({ checkIn: clickedDate, resort: chalet().resortValue });
         },
-
         eventClick(info) {
           info.jsEvent.preventDefault();
-
-          const date = normalizeDate(info.event.extendedProps.date);
-
-          if (isPastDate(date)) return;
-
-          goToBooking({
-            date: date,
-            resort: chalet().resortValue
-          });
+          if (info.event.extendedProps && info.event.extendedProps.available === false) return;
+          goToBooking({ checkIn: normalizeDate(info.event.startStr), resort: chalet().resortValue });
         }
       });
-
       calendar.render();
     }
 
     function applyLanguageWithoutCalendar() {
-      document.documentElement.lang = currentLang;
-      document.documentElement.dir = I18N[currentLang].dir;
-      document.body.dir = I18N[currentLang].dir;
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t(el.getAttribute('data-i18n'));
-      });
-
-      langToggle.textContent = t('langButton');
-      menuToggle.setAttribute('aria-label', currentLang === 'ar' ? 'فتح القائمة' : 'Open menu');
-
-      saveLanguagePreference();
-      updateGalleryArrowDirection();
-      renderDescription();
-      renderAmenities();
-      renderPrices();
-      renderGallery();
+      document.documentElement.lang = currentLang; document.documentElement.dir = I18N[currentLang].dir; document.body.dir = I18N[currentLang].dir;
+      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.getAttribute('data-i18n')));
+      langToggle.textContent = t('langButton'); menuToggle.setAttribute('aria-label', currentLang === 'ar' ? 'فتح القائمة' : 'Open menu');
+      document.getElementById('galleryPrevBtn').textContent = currentLang === 'ar' ? '›' : '‹';
+      document.getElementById('galleryNextBtn').textContent = currentLang === 'ar' ? '‹' : '›';
+      document.getElementById('pageChaletName').textContent = currentLang === 'ar' ? chalet().nameAr : chalet().nameEn;
+      document.getElementById('chaletDescription').textContent = currentLang === 'ar' ? chalet().descriptionAr : chalet().descriptionEn;
+      document.title = (currentLang === 'ar' ? chalet().nameAr : chalet().nameEn) + ' - ' + t('topbarBrand');
+      saveLanguagePreference(); renderAmenities(); renderPrices(); renderGallery();
     }
 
-    function applyLanguage() {
-      applyLanguageWithoutCalendar();
+    langToggle.addEventListener('click', () => { currentLang = currentLang === 'ar' ? 'en' : 'ar'; applyLanguageWithoutCalendar(); if (calendar) { calendarDataLoaded = false; bookingData = []; renderCalendar(); } });
+    document.getElementById('galleryPrevBtn').addEventListener('click', () => showGalleryImage(currentGalleryIndex - 1));
+    document.getElementById('galleryNextBtn').addEventListener('click', () => showGalleryImage(currentGalleryIndex + 1));
+    menuToggle.addEventListener('click', openMenu); closeMenuBtn.addEventListener('click', closeMenu); sideMenuOverlay.addEventListener('click', closeMenu);
 
-      if (calendar || fullCalendarAssetsLoaded) {
-        calendarDataLoaded = false;
-        bookingData = [];
-        renderCalendar();
-      }
-    }
-
-    galleryPrevBtn.addEventListener('click', prevGalleryImage);
-    galleryNextBtn.addEventListener('click', nextGalleryImage);
-
-    galleryMain.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-
-    galleryMain.addEventListener('touchend', (e) => {
-      const deltaX = e.changedTouches[0].clientX - touchStartX;
-
-      if (Math.abs(deltaX) > 40) {
-        if (deltaX < 0) nextGalleryImage();
-        if (deltaX > 0) prevGalleryImage();
-      }
-    }, { passive: true });
-
-    langToggle.addEventListener('click', () => {
-      currentLang = currentLang === 'ar' ? 'en' : 'ar';
-      saveLanguagePreference();
-      applyLanguage();
-    });
-
-    menuToggle.addEventListener('click', openMenu);
-    closeMenuBtn.addEventListener('click', closeMenu);
-    sideMenuOverlay.addEventListener('click', closeMenu);
-
-    document.querySelectorAll('.menu-link').forEach(link => {
-      link.addEventListener('click', e => {
-        const targetId = link.getAttribute('data-scroll-target');
-
-        if (targetId) {
-          e.preventDefault();
-
-          const target = document.getElementById(targetId);
-
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-
-          closeMenu();
-        } else {
-          saveLanguagePreference();
-          closeMenu();
-        }
-      });
-    });
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        saveLanguagePreference();
-      });
-    });
-
-    document.getElementById('mapLink').setAttribute('href', GOOGLE_MAPS_URL);
-    contactWhatsapp.setAttribute('href', CONTACT_WHATSAPP_URL);
-    contactInstagram.setAttribute('href', CONTACT_INSTAGRAM_URL);
-    contactCall.setAttribute('href', CONTACT_CALL_URL);
-
-    loadLanguagePreference();
-    applyLanguageWithoutCalendar();
-
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        renderCalendar();
-      }, 1500);
-    });
+    loadLanguagePreference(); applyLanguageWithoutCalendar();
+    window.addEventListener('load', () => setTimeout(() => renderCalendar(), 1500));
   </script>
 </body>
 </html>
