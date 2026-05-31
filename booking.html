@@ -118,7 +118,7 @@
     .loading-subtext { color: var(--muted); font-size: 13px; }
     .fallback { display: none; margin: 12px 20px 20px; padding: 12px; border-radius: 14px; background: rgba(212,84,84,0.10); color: #992f2f; border: 1px solid rgba(212,84,84,0.16); font-size: 14px; line-height: 1.8; }
 
-    .fc { --fc-border-color: rgba(95,70,48,0.10); --fc-page-bg-color: transparent; --fc-neutral-bg-color: rgba(255,255,255,0.26); --fc-list-event-hover-bg-color: rgba(139,106,72,0.08); --fc-today-bg-color: rgba(236,228,216,0.74); color: var(--text); }
+    .fc { --fc-border-color: rgba(95,70,48,0.10); --fc-page-bg-color: transparent; --fc-neutral-bg-color: rgba(255,255,255,0.26); --fc-list-event-hover-bg-color: rgba(139,106,72,0.08); --fc-today-bg-color: transparent; color: var(--text); }
     .fc-theme-standard td, .fc-theme-standard th { border-color: rgba(95,70,48,0.08); }
     .fc .fc-toolbar { gap: 8px; flex-wrap: wrap; margin-bottom: 10px; padding: 12px 12px 0; }
     .fc .fc-toolbar-title { font-size: clamp(1.05rem, 3vw, 1.4rem); color: var(--text); font-weight: 800; letter-spacing: -0.01em; }
@@ -129,7 +129,7 @@
     .fc-daygrid-day-top { padding: 2px 4px; }
     .fc-daygrid-event { border: 0; border-radius: 12px; padding: 4px 6px; margin-top: 4px; font-size: 11px; font-weight: 800; text-align: center; box-shadow: 0 10px 18px rgba(66,43,19,0.10); }
     .fc-daygrid-day-number, .fc-col-header-cell-cushion { color: var(--text); text-decoration: none; font-weight: 800; font-size: 13px; }
-    .fc .fc-day-today { background: rgba(236,228,216,0.74) !important; }
+    .fc .fc-day-today { background: transparent !important; }
 
     .booking-shell { width: 100%; padding: 18px 0 0; }
     .booking-form { padding: 0 20px 20px; }
@@ -836,18 +836,18 @@
         if (!selectedCheckOut) {
           events.push({
             start: selectedCheckIn, end: supabaseAddDays(selectedCheckIn, 1),
-            display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.70)' 
+            display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.60)' 
           });
         } else {
           events.push({
             start: selectedCheckIn, end: supabaseAddDays(selectedCheckIn, 1),
-            display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.70)' 
+            display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.60)' 
           });
           
           if (selectedCheckOut !== selectedCheckIn) {
             events.push({
               start: selectedCheckOut, end: supabaseAddDays(selectedCheckOut, 1),
-              display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.70)' 
+              display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.60)' 
             });
           }
           
@@ -855,7 +855,7 @@
           if (nextDay < selectedCheckOut) {
             events.push({
               start: nextDay, end: selectedCheckOut,
-              display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.25)' 
+              display: 'background', backgroundColor: 'rgba(36, 164, 109, 0.20)' 
             });
           }
         }
