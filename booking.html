@@ -811,11 +811,22 @@
       const events = [];
       bookingData.forEach(item => {
         if (item.resort === currentResort.ar && item.status !== 'متاح') {
-          events.push({
-            title: t('bookedEvent'), start: item.checkIn, end: item.checkOut,
-            backgroundColor: '#d45454', borderColor: '#d45454', textColor: '#ffffff', allDay: true,
-            extendedProps: { available: false }
-          });
+          // بدلاً من فترة متصلة، إظهار حدث لكل يوم
+          let d = new Date(item.checkIn + 'T12:00:00');
+          const end = new Date(item.checkOut + 'T12:00:00');
+          
+          while (d < end) {
+            events.push({
+              title: t('bookedEvent'), 
+              start: normalizeDate(d),
+              backgroundColor: '#d45454', 
+              borderColor: '#d45454', 
+              textColor: '#ffffff', 
+              allDay: true,
+              extendedProps: { available: false }
+            });
+            d.setDate(d.getDate() + 1);
+          }
         }
       });
 
