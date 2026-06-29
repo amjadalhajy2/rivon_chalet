@@ -174,6 +174,8 @@
     .instagram-link .contact-icon { color: #9b6a7f; }
     .call-link .contact-icon { color: #8b6a48; }
 
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     @media (max-width: 720px) {
       :root { --header-h: 72px; }
       .hero-media { aspect-ratio: 6 / 9.8; min-height: 500px; }
@@ -317,6 +319,10 @@
           <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm8.5 1.8h-8.5A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.8A3.2 3.2 0 1 0 12 15.2 3.2 3.2 0 0 0 12 8.8Zm5.15-2.4a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></svg></span>
           <span class="contact-label" data-i18n="contactInstagram">انستجرام</span>
         </a>
+        <a class="contact-link call-link" id="contactCall" href="tel:+96800000000" target="_blank" rel="noopener noreferrer">
+          <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02L6.62 10.79Z"/></svg></span>
+          <span class="contact-label" data-i18n="contactCall">اتصل بنا</span>
+        </a>
       </div>
     </section>
   </main>
@@ -369,9 +375,9 @@
     const FULLCALENDAR_LOCALE_URLS = ['./libs/fullcalendar/locales-all.global.min.js', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/locales/ar.global.min.js'];
 
     const CHALET_DATA = [
-      { code: 'A', nameAr: 'شاليه رافانا A', nameEn: 'Ravana Chalet A', resortValue: 'شاليه رافانا A', descAr: 'شاليه رافانا A يمنحكم تجربة إقامة هادئة وخاصة بتصميم أنيق وأجواء دافئة تناسب الاسترخاء وقضاء أجمل الأوقات.', descEn: 'Ravana Chalet A offers a calm and private stay with elegant design and a warm atmosphere.', images: ['./images/resort-a-1.webp', './images/resort-a-2.webp', './images/resort-a-3.webp', './images/resort-a-4.webp'] },
-      { code: 'B', nameAr: 'شاليه رافانا B', nameEn: 'Ravana Chalet B', resortValue: 'شاليه رافانا B', descAr: 'شاليه رافانا B صُمم ليكون مساحة مريحة وراقية لمن يبحث عن الخصوصية والهدوء.', descEn: 'Ravana Chalet B is designed as a refined and comfortable private space.', images: ['./images/resort-b-1.webp', './images/resort-b-2.webp', './images/resort-b-3.webp', './images/resort-b-4.webp'] },
-      { code: 'C', nameAr: 'شاليه رافانا C', nameEn: 'Ravana Chalet C', resortValue: 'شاليه رافانا C', descAr: 'شاليه رافانا C يوفر أجواء خاصة وهادئة تجمع بين الراحة والبساطة الراقية.', descEn: 'Ravana Chalet C provides a private and peaceful atmosphere that combines comfort with simplicity.', images: ['./images/resort-c-1.webp', './images/resort-c-2.webp', './images/resort-c-3.webp', './images/resort-c-4.webp'] }
+      { code: 'A', nameAr: 'شاليه رافانا A', nameEn: 'Ravana Chalet A', resortValue: 'شاليه رافانا A', descAr: 'إطلالة مريحة ومساحات خاصة مثالية.', descEn: 'A warm private retreat with relaxing views.', images: ['./images/resort-a-1.webp', './images/resort-a-2.webp', './images/resort-a-3.webp', './images/resort-a-4.webp'] },
+      { code: 'B', nameAr: 'شاليه رافانا B', nameEn: 'Ravana Chalet B', resortValue: 'شاليه رافانا B', descAr: 'تصميم عصري وجلسات أنيقة تمنحكم أجواء هادئة.', descEn: 'A modern chalet with elegant seating.', images: ['./images/resort-b-1.webp', './images/resort-b-2.webp', './images/resort-b-3.webp', './images/resort-b-4.webp'] },
+      { code: 'C', nameAr: 'شاليه رافانا C', nameEn: 'Ravana Chalet C', resortValue: 'شاليه رافانا C', descAr: 'مساحة خاصة تمنحكم الراحة والهدوء.', descEn: 'A private relaxing space designed for families.', images: ['./images/resort-c-1.webp', './images/resort-c-2.webp', './images/resort-c-3.webp', './images/resort-c-4.webp'] }
     ];
     const HERO_IMAGES = ['./images/resort-a-1.webp', './images/resort-a-2.webp', './images/resort-b-1.webp', './images/resort-b-2.webp', './images/resort-c-1.webp', './images/resort-c-2.webp'];
 
@@ -380,7 +386,7 @@
         dir: 'rtl', langButton: 'EN', topbarBrand: 'شاليهات رافانا', menuTitle: 'التنقل', menuHome: 'الرئيسية', menuOurChalets: 'شاليهاتنا',
         menuChaletA: 'شاليه رافانا A', menuChaletB: 'شاليه رافانا B', menuChaletC: 'شاليه رافانا C', menuRules: 'الشروط والضوابط', menuContact: 'تواصل معنا',
         heroWelcome: 'مرحبا بكم في شاليهات رافانا', heroBook: 'احجز اقامتك الان', introTitle: 'تجربة إقامة لا تُنسى',
-        introCopy: 'في شاليهات رافانا ستجدون مساحة خاصة لأجمل اللحظات، حيث الهدوء والخصوصية والتصميم الدافئ. تجربة مثالية للعائلات والأصدقاء.', chaletBook: 'احجز الان', chaletDetails: 'تفاصيل الشاليه',
+        introCopy: 'في شاليهات رافانا ستجدون مساحة خاصة لأجمل اللحظات، حيث الهدوء والخصوصية.', chaletBook: 'احجز الان', chaletDetails: 'تفاصيل الشاليه',
         calendarTitle: 'التوفر والحجز', calendarSub: 'يمكنك الحجز من خلال التقويم ادناه', legendAvailable: 'متاح', legendBooked: 'محجوز',
         loadingTitle: 'جاري تحميل التقويم', loadingSub: 'يرجى الانتظار قليلاً', calendarDataError: 'تعذر تحميل بيانات التقويم.',
         locationTitle: 'موقعنا', locationPlace: 'نزوى، عمان', contactTitle: 'تواصل معنا', contactWhatsapp: 'واتساب', contactInstagram: 'انستجرام', contactCall: 'اتصل بنا'
@@ -389,7 +395,7 @@
         dir: 'ltr', langButton: 'AR', topbarBrand: 'Ravana Chalets', menuTitle: 'Navigation', menuHome: 'Home', menuOurChalets: 'Our Chalets',
         menuChaletA: 'Ravana Chalet A', menuChaletB: 'Ravana Chalet B', menuChaletC: 'Ravana Chalet C', menuRules: 'Terms & Rules', menuContact: 'Contact Us',
         heroWelcome: 'Welcome to Ravana Chalets', heroBook: 'Book Your Stay Now', introTitle: 'A Stay You Will Remember',
-        introCopy: 'At Ravana Chalets, you will discover a private space for your most beautiful moments. An ideal experience for family and friends.', chaletBook: 'Book Now', chaletDetails: 'Chalet Details',
+        introCopy: 'At Ravana Chalets, you will discover a private space for your most beautiful moments.', chaletBook: 'Book Now', chaletDetails: 'Chalet Details',
         calendarTitle: 'Availability & Booking', calendarSub: 'You can book through the calendar below', legendAvailable: 'Available', legendBooked: 'Booked',
         loadingTitle: 'Loading Calendar', loadingSub: 'Please wait a moment', calendarDataError: 'Unable to load calendar data.',
         locationTitle: 'Our Location', locationPlace: 'Nizwa, Oman', contactTitle: 'Contact Us', contactWhatsapp: 'WhatsApp', contactInstagram: 'Instagram', contactCall: 'Call Us'
@@ -430,34 +436,25 @@
     }
     function goToChaletDetails(code) { saveLanguagePreference(); window.location.href = 'chalet-' + code.toLowerCase() + '.html'; }
 
-    // دالة تحميل ذكية تصطاد الأخطاء بدقة
     function loadScript(src) {
       return new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) return resolve();
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = () => reject(new Error(`Failed to load: ${src}`));
-        document.body.appendChild(script);
+        const s = document.createElement('script'); s.src = src; s.async = false;
+        s.onload = resolve; s.onerror = () => reject(new Error('Failed to load: ' + src));
+        document.body.appendChild(s);
       });
     }
 
-    // تقوم بتحميل الملف المحلي أولاً، وإذا لم تجده تنتقل للـ CDN فوراً دون توقف
     async function loadFullCalendarAssets() {
       if (fullCalendarAssetsLoaded) return;
       if (fullCalendarAssetsLoading) return fullCalendarAssetsLoading;
-
       fullCalendarAssetsLoading = (async () => {
-        try {
-          await loadScript(FULLCALENDAR_JS_URLS[0]);
-          await loadScript(FULLCALENDAR_LOCALE_URLS[0]);
-        } catch (e) {
-          console.warn('الملفات المحلية غير موجودة، يتم تحميل التقويم من CDN...');
-          await loadScript(FULLCALENDAR_JS_URLS[1]);
-          await loadScript(FULLCALENDAR_LOCALE_URLS[1]);
-        }
+        // Try local first, fall back to CDN
+        try { await loadScript(FULLCALENDAR_JS_URLS[0]); }
+        catch (e) { await loadScript(FULLCALENDAR_JS_URLS[1]); }
+        try { await loadScript(FULLCALENDAR_LOCALE_URLS[0]); }
+        catch (e) { await loadScript(FULLCALENDAR_LOCALE_URLS[1]); }
         fullCalendarAssetsLoaded = true;
-      })();
+      })().catch(e => { fullCalendarAssetsLoading = null; throw e; });
       return fullCalendarAssetsLoading;
     }
 
@@ -574,19 +571,10 @@
     }
 
     async function renderCalendar() {
+      clearCalendarError();
       const calendarEl = document.getElementById('calendar');
-      try { 
-        await loadFullCalendarAssets(); 
-      } catch (e) { 
-        calendarLoading.classList.add('hidden'); 
-        setCalendarError(t('calendarDataError'));
-        return; 
-      }
-      if (!window.FullCalendar) {
-        calendarLoading.classList.add('hidden'); 
-        setCalendarError(t('calendarDataError'));
-        return;
-      }
+      try { await loadFullCalendarAssets(); } catch (e) { calendarLoading.classList.add('hidden'); setCalendarError(t('calendarDataError')); return; }
+      if (!window.FullCalendar) return;
       if (calendar) calendar.destroy();
 
       calendar = new FullCalendar.Calendar(calendarEl, {
@@ -602,6 +590,7 @@
         dateClick(info) {
           const clickedDate = normalizeDate(info.dateStr);
           if (isPastDate(clickedDate)) return;
+          // In index, clicking an empty cell redirects without pre-filling resort
           goToBooking({ checkIn: clickedDate });
         },
         eventClick(info) {
@@ -626,6 +615,17 @@
 
     renderHeroSlides(); startHeroAutoplay();
     loadLanguagePreference(); applyLanguageWithoutCalendar();
+
+    // Handle side menu scroll-target links
+    document.querySelectorAll('[data-scroll-target]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.classList.remove('menu-open');
+        const target = document.getElementById(link.getAttribute('data-scroll-target'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
     window.addEventListener('load', () => setTimeout(() => renderCalendar(), 1500));
   </script>
 </body>
