@@ -430,17 +430,26 @@
     }
     function goToChaletDetails(code) { saveLanguagePreference(); window.location.href = 'chalet-' + code.toLowerCase() + '.html'; }
 
+    // إضافة دوال تحميل المكتبات بشكل آمن لضمان عدم توقف التقويم
+    function loadExternalScript(src) {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector('script[src="' + src + '"]')) return resolve();
+        const script = document.createElement('script'); script.src = src; script.async = false; script.onload = resolve; script.onerror = reject; document.body.appendChild(script);
+      });
+    }
+
+    async function loadFirstWorkingScript(urls) {
+      let lastError = null;
+      for (const url of urls) { try { await loadExternalScript(url); return url; } catch (e) { lastError = e; } }
+      throw lastError || new Error('Script failed');
+    }
+
     async function loadFullCalendarAssets() {
       if (fullCalendarAssetsLoaded) return;
       if (fullCalendarAssetsLoading) return fullCalendarAssetsLoading;
-      fullCalendarAssetsLoading = new Promise((resolve) => {
-        const script = document.createElement('script'); script.src = FULLCALENDAR_JS_URLS[0]; script.async = false;
-        script.onload = () => {
-          const loc = document.createElement('script'); loc.src = FULLCALENDAR_LOCALE_URLS[0]; loc.async = false;
-          loc.onload = () => { fullCalendarAssetsLoaded = true; resolve(); };
-          document.body.appendChild(loc);
-        };
-        document.body.appendChild(script);
+      fullCalendarAssetsLoading = loadFirstWorkingScript(FULLCALENDAR_JS_URLS).then(async () => {
+        try { await loadFirstWorkingScript(FULLCALENDAR_LOCALE_URLS); } catch (e) {}
+        fullCalendarAssetsLoaded = true;
       });
       return fullCalendarAssetsLoading;
     }
@@ -559,7 +568,13 @@
 
     async function renderCalendar() {
       const calendarEl = document.getElementById('calendar');
-      try { await loadFullCalendarAssets(); } catch (e) { calendarLoading.classList.add('hidden'); return; }
+      try { 
+        await loadFullCalendarAssets(); 
+      } catch (e) { 
+        calendarLoading.classList.add('hidden'); 
+        setCalendarError(t('calendarDataError')); // تفعيل ظهور رسالة الخطأ للمستخدم
+        return; 
+      }
       if (!window.FullCalendar) return;
       if (calendar) calendar.destroy();
 
@@ -576,7 +591,6 @@
         dateClick(info) {
           const clickedDate = normalizeDate(info.dateStr);
           if (isPastDate(clickedDate)) return;
-          // In index, clicking an empty cell redirects without pre-filling resort
           goToBooking({ checkIn: clickedDate });
         },
         eventClick(info) {
