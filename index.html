@@ -418,6 +418,8 @@
     function loadLanguagePreference() { try { const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY); if (saved && I18N[saved]) currentLang = saved; } catch (e) {} }
     function t(key) { return I18N[currentLang][key] || key; }
     function isPastDate(dateStr) { return dateStr < supabaseTodayIso(); }
+    function setCalendarError(message) { calendarError.textContent = message || t('calendarDataError'); calendarError.style.display = 'block'; }
+    function clearCalendarError() { calendarError.style.display = 'none'; }
 
     function goToBooking(params = {}) {
       saveLanguagePreference();
@@ -428,18 +430,34 @@
     }
     function goToChaletDetails(code) { saveLanguagePreference(); window.location.href = 'chalet-' + code.toLowerCase() + '.html'; }
 
+    // دالة تحميل ذكية تصطاد الأخطاء بدقة
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) return resolve();
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Failed to load: ${src}`));
+        document.body.appendChild(script);
+      });
+    }
+
+    // تقوم بتحميل الملف المحلي أولاً، وإذا لم تجده تنتقل للـ CDN فوراً دون توقف
     async function loadFullCalendarAssets() {
       if (fullCalendarAssetsLoaded) return;
       if (fullCalendarAssetsLoading) return fullCalendarAssetsLoading;
-      fullCalendarAssetsLoading = new Promise((resolve) => {
-        const script = document.createElement('script'); script.src = FULLCALENDAR_JS_URLS[0]; script.async = false;
-        script.onload = () => {
-          const loc = document.createElement('script'); loc.src = FULLCALENDAR_LOCALE_URLS[0]; loc.async = false;
-          loc.onload = () => { fullCalendarAssetsLoaded = true; resolve(); };
-          document.body.appendChild(loc);
-        };
-        document.body.appendChild(script);
-      });
+
+      fullCalendarAssetsLoading = (async () => {
+        try {
+          await loadScript(FULLCALENDAR_JS_URLS[0]);
+          await loadScript(FULLCALENDAR_LOCALE_URLS[0]);
+        } catch (e) {
+          console.warn('الملفات المحلية غير موجودة، يتم تحميل التقويم من CDN...');
+          await loadScript(FULLCALENDAR_JS_URLS[1]);
+          await loadScript(FULLCALENDAR_LOCALE_URLS[1]);
+        }
+        fullCalendarAssetsLoaded = true;
+      })();
       return fullCalendarAssetsLoading;
     }
 
@@ -561,9 +579,14 @@
         await loadFullCalendarAssets(); 
       } catch (e) { 
         calendarLoading.classList.add('hidden'); 
+        setCalendarError(t('calendarDataError'));
         return; 
       }
-      if (!window.FullCalendar) return;
+      if (!window.FullCalendar) {
+        calendarLoading.classList.add('hidden'); 
+        setCalendarError(t('calendarDataError'));
+        return;
+      }
       if (calendar) calendar.destroy();
 
       calendar = new FullCalendar.Calendar(calendarEl, {
