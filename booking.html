@@ -634,6 +634,24 @@
     function openMenu() { document.body.classList.add('menu-open'); }
     function closeMenu() { document.body.classList.remove('menu-open'); }
 
+    // دالة جديدة لقراءة البيانات الممررة في الرابط (URL) وتحديث الاختيارات
+    function applyUrlParameters() {
+      const params = new URLSearchParams(window.location.search);
+      
+      const urlResort = params.get('resort');
+      if (urlResort) {
+        const matchedResort = findResort(urlResort);
+        if (matchedResort) {
+          currentResort = matchedResort;
+        }
+      }
+
+      const urlCheckIn = params.get('checkIn');
+      if (urlCheckIn) {
+        selectedCheckIn = normalizeDate(urlCheckIn);
+      }
+    }
+
     function formatNights(n) {
       if (currentLang === 'ar') {
         if (n === 1) return 'ليلة واحدة';
@@ -1001,7 +1019,10 @@
     menuToggle.addEventListener('click', openMenu); closeMenuBtn.addEventListener('click', closeMenu); sideMenuOverlay.addEventListener('click', closeMenu);
     bookingForm.addEventListener('submit', submitBooking);
 
-    populateCountryCodes(); loadLanguagePreference(); applyLanguageWithoutCalendar();
+    populateCountryCodes(); 
+    loadLanguagePreference(); 
+    applyUrlParameters(); // قراءة الرابط وتحديث الشاليه قبل بناء الصفحة
+    applyLanguageWithoutCalendar();
     window.addEventListener('load', () => setTimeout(() => renderCalendar(), 1200));
   </script>
 </body>
