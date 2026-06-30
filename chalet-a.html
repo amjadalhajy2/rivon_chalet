@@ -497,9 +497,6 @@
     let fullCalendarAssetsLoading = null;
 
     function detectChaletCode() {
-      const path = window.location.pathname.toLowerCase();
-      if (path.includes('chalet-b')) return 'B';
-      if (path.includes('chalet-c')) return 'C';
       return 'A';
     }
     const currentChaletCode = detectChaletCode();
